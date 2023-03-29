@@ -39,7 +39,7 @@ public class EmployeeController {
     @GetMapping("/create")
     public String showCreatePage() {
 //        employeeService.getInfo(model);
-        return "create";
+        return "/employee/create";
     }
 
     @GetMapping("/update/{employeeId}")
@@ -55,7 +55,7 @@ public class EmployeeController {
 
 //        employeeService.getInfo(model);
 
-        return "update";
+        return "/employee/update";
     }
 
 //    @GetMapping("/update/{employeeId}")

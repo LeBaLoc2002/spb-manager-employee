@@ -32,3 +32,359 @@ header {
     height: 32px;
     border-radius: 50px;
 }
+
+body {
+    /*font-family: Ionicons;*/
+    color: black;
+}
+
+.modal-header {
+    border-bottom: 0;
+}
+
+.modal-body-view {
+    background-color: #877dc3;
+}
+
+.table {
+    color: black;
+    background-color: white;
+}
+
+/*.table > tbody > tr > td {*/
+/*    vertical-align: middle;*/
+/*}*/
+
+tbody tr {
+    font-size: 16px;
+}
+
+td.price {
+    text-align: center;
+    padding-top: 30px;
+    font-weight: 600;
+}
+
+.tooltip-inner {
+    background-color: #555;
+}
+
+.bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
+    top: -1px;
+    border-top-color: #555;
+}
+
+.text-dot-one-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-dot-multiline {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.footer {
+    padding: 12px 15px 30px;
+}
+
+.avatarListImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.hide {
+    display: none;
+}
+
+.frm-alert-danger {
+    padding: 10px 35px;
+    margin-bottom: 15px;
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.modal-alert-danger label {
+    display: list-item;
+}
+
+input.error {
+    border: solid 1px red;
+}
+
+.error {
+    color: #842029;
+    font-size: inherit;
+    position: relative;
+    line-height: 1;
+}
+
+label {
+    font-weight: unset;
+}
+
+.card {
+    margin-bottom: unset;
+    border: 0;
+}
+
+
+
+#cardId {
+    width: 200px;
+    height: 164px;
+}
+
+/*.table>thead>tr {*/
+/*    border-bottom: ridge;*/
+/*    border-top: ridge;*/
+/*}*/
+
+/*.card-body {*/
+/*    padding: 0.5rem;*/
+/*}*/
+
+.modal-xl {
+    max-width: 1000px;
+}
+
+.listPage {
+    padding: 10px;
+    list-style: none;
+}
+
+.listPage li{
+    background-color: rgba(255, 255, 255, 0.66);
+    padding: 15px;
+    display: inline-block;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.listPage .active{
+    background-color: #bcabe1;
+    color: #fff;
+}
+
+.modal-showtime {
+    max-width: 900px;
+    left: 60px;
+}
+.page-title-box .page-title-right{
+    margin-top: 5px;
+    margin-left: 800px;
+
+}
+
+.left-side-menu {
+    padding: 0;
+}
+
+#sidebar-menu>ul>li>a {
+    padding: 10px 17px;
+}
+
+#sidebar-menu>ul>li>a.active{
+    background-color: unset;
+}
+
+#sidebar-menu>ul>li>a{
+    color: #023a56;
+}
+
+.nav-second-level li a{
+    color: #1d465a;
+}
+
+
+.card-box {
+    background-color: #fff;
+    padding: 30px;
+    width:100%
+}
+
+.film-details-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1300px;
+    display: block;
+    margin: 0 auto;
+}
+.film-details-wrap .film-item {
+    width: 100%;
+    height: auto;
+    /*padding: 20px;*/
+    /*overflow: hidden;*/
+}
+.film-details-wrap .film-item-pic {
+    width: 38%;
+    max-width: 470px;
+    float: left;
+}
+.film-details-wrap .film-item-pic img {
+    width: 100%;
+    height: 500px;
+    border: 9px solid #fae2a2;
+    display: block;
+}
+.film-details-wrap .film-item-txt {
+    float: right;
+    width: 60%;
+    min-height: 500px;
+    box-shadow: 10px 10px 10px 0 rgb(0 0 0 / 30%), 0 0 50px 0 rgb(0 0 0 / 40%) inset;
+    background-color: #f18720;
+    padding: 30px 40px;
+}
+.film-details-wrap .film-item-txt h3 {
+    font-family: 'Futurab';
+    font-weight: normal;
+    font-size: 28px;
+    text-transform: uppercase;
+    line-height: 30px;
+    color: #fff;
+    text-align: left;
+    margin-bottom: 30px;
+}
+.film-overview {
+    max-height: inherit;
+    overflow: inherit;
+    display: table;
+    margin-bottom: 10px;
+}
+.film-details-wrap .film-item-type {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.film-details-wrap .film-item-but {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+.l-title {
+    display: table-cell;
+    width: 100px;
+    font-family: 'MyriadLight';
+    font-weight: normal;
+    font-size: 18px;
+    vertical-align: middle;
+    color: #fff;
+}
+.l-value {
+    display: table-cell;
+    line-height: 18px;
+    background-color: #fff;
+    font-family: 'MyriadBold';
+    font-weight: normal;
+    font-size: 20px;
+    color: #000;
+    border-radius: 20px 0 20px 0;
+    -webkit-border-radius: 20px 0 20px 0;
+    padding: 12px 30px;
+    vertical-align: middle;
+}
+.film-item-txt p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #fff;
+    line-height: 20px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.modal-content .modal-header {
+    background-color: #7266ba;
+}
+
+.modal-content .modal-header h4 {
+    color: #fff;
+}
+
+.modal-content .modal-header .close {
+    color: #fff;
+    font-weight: 600;
+    font-size: 27px;
+}
+
+button i {
+    margin-right: 2px;
+}
+
+.back-list {
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+    color: #000;
+    background-color: #fdebcd;
+}
+
+input.form-control, select.form-control, textarea.form-control {
+    font-size: 17px;
+}
+
+input[type="text"]:focus, .form-control:invalid:focus, .form-control:valid:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1) !important;
+    -webkit-box-shadow: 0 0 5px rgba(81, 203, 238, 1) !important;
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.iziToast-message.slideIn span {
+    color: #5040b4;
+    font-weight: 600;
+}
+
+#sidebar-menu li a.waves-effect.waves-light {
+    color: #7266ba;
+}
+
+#sidebar-menu li.mm-active a.waves-effect.waves-light {
+    font-weight: bolder;
+}
+
+#sidebar-menu li a.waves-effect.waves-light:hover {
+    font-weight: bolder;
+}
+
+#sidebar-menu li ul li a:hover {
+    font-weight: bolder;
+}
+
+.fl-left {
+    float: left;
+}
+
+.fl-right {
+    float: right;
+}
+
+.he-42 {
+    height: 42px;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.pdr-5 {
+    padding-right: 5px;
+}
+
+.fs-14 {
+    font-size: 14px !important;
+}
+
+.fs-15 {
+    font-size: 15px !important;
+}

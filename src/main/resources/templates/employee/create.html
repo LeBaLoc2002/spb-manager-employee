@@ -2,167 +2,211 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking the employee growth</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/iziToast/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/assets/css/preview-image-css.css">
 </head>
 <body>
-<div id="wrapper">
-
-    <!-- Topbar Start -->
-    <th:block th:replace="cp/layout/topbar :: topbar"/>
-    <!-- end Topbar -->
-
-    <!-- ========== Left Sidebar Start ========== -->
-    <th:block th:replace="cp/layout/left-bar :: left-bar"/>
-    <!-- Left Sidebar End -->
-    <div class="loader">
-        <div id="loading"></div>
-    </div>
-    <div class="content-page">
-        <div class="content">
-
-            <!-- Start Content-->
-            <div class="container-fluid">
-
-                <!-- start page title -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="page-title-box">
-                            <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item">
-                                        <a href="/cp/staffs/local">
-                                            <button type="button" id="btnShowCreateModal"
-                                                    class="btn btn-outline-primary back-list">
-                                                <i class="fa fa-list-ul"></i>
-                                                Danh sách nhân viên
-                                            </button>
-                                        </a>
-                                    </li>
-                                </ol>
-                            </div>
-                            <h4 class="page-title">THÊM NHÂN VIÊN MỚI</h4>
-                        </div>
+<div class="container-fluid" style="background-color: #f7f6fd; height: 100vh;">
+    <header>
+        <div class="container">
+            <div class="col-1 fl-l">
+                <img class="logo" src="/assets/images/logo-128.png" alt="">
+            </div>
+            <div class="col-10 fl-l">
+                <div style="position: absolute; left: 40%;">
+                    <div class="fl-l mg-10">
+                        Dashboard
+                    </div>
+                    <div class="fl-l mg-10">
+                        Departments
+                    </div>
+                    <div class="fl-l mg-10">
+                        Empoyees
                     </div>
                 </div>
-                <!-- end page title -->
+            </div>
+            <div class="col-1 fl-r">
+                <img class="avatar" src="/assets/images/User-Avatar-Profile-128.png" alt="">
+            </div>
+        </div>
+    </header>
 
-                <!-- START PAGE CONTENT -->
+    <div class="content container">
 
-                <div class="row">
-                    <form id="frmCreateStaff" class="col-lg-12 card-box">
-                        <div class="col-lg-8 mt-2" style="float: left">
-                            <div class="row">
-                                <div class="form-group col-lg-6">
-                                    <label for="fullNameCre" class="col-form-label">Họ và tên <span
-                                            style="color: red">*</span></label>
-                                    <input id="fullNameCre" name="fullNameCre"
-                                           type="text"
-                                           class="form-control"
-                                           placeholder="Nhập họ tên ...">
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="emailCre" class="col-form-label">Email <span style="color: red">*</span></label>
-                                    <input id="emailCre" name="emailCre"
-                                           type="text"
-                                           class="form-control"
-                                           placeholder="Nhập email ...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-lg-6">
-                                    <label for="phoneCre" class="col-form-label">Số điện thoại <span style="color: red">*</span></label>
-                                    <input id="phoneCre" name="phoneCre"
-                                           type="text"
-                                           class="form-control"
-                                           placeholder="Nhập số điện thoại ...">
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="dobCre" class="col-form-label">Ngày sinh <span
-                                            style="color: red">*</span></label>
-                                    <input class="form-control" type="date" name="dobCre" id="dobCre">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-lg-4">
-                                    <label for="provinceIdCre" class="col-form-label">Tỉnh/Thành Phố</label>
-                                    <select id="provinceIdCre" name="provinceIdCre"
-                                            class="form-control">
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-4">
-                                    <label for="districtIdCre" class="col-form-label">Quận/Huyện</label>
-                                    <select id="districtIdCre" name="districtIdCre"
-                                            class="form-control">
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-4">
-                                    <label for="wardIdCre" class="col-form-label">Phường/Xã</label>
-                                    <select id="wardIdCre" name="wardIdCre"
-                                            class="form-control">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-lg-6">
-                                    <label for="theaterIdCre" class="col-form-label">Rạp quản lý
-                                    </label>
-                                    <select id="theaterIdCre" name="theaterIdCre"
-                                            class="form-control">
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="localRoleIdCre" class="col-form-label">Chức vụ
-                                    </label>
-                                    <select id="localRoleIdCre" name="localRoleIdCre"
-                                            class="form-control">
-                                    </select>
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <!-- Left Sidebar End -->
+            <div class="loader">
+                <div id="loading"></div>
+            </div>
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item">
+                                                <a href="/cp/employees">
+                                                    <button type="button" style="margin-bottom: -32px;"
+                                                            class="btn btn-outline-primary back-list">
+                                                        <i class="fa fa-list-ul"></i>
+                                                        Danh sách nhân viên
+                                                    </button>
+                                                </a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">THÊM NHÂN VIÊN MỚI</h4>
                                 </div>
                             </div>
                         </div>
+                        <!-- end page title -->
 
-                        <div class="col-lg-4 mt-3" style="float: left">
-                            <div class="card" id="cardId" style="margin: 0 auto; height: 200px; !important; ">
-                                <div class="wrappers">
-                                    <div class="image-preview">
-                                        <canvas id="canvasCre"></canvas>
-                                    </div>
-                                    <div class="content" style="opacity: 1;">
-                                        <div class="icon">
-                                            <i class="mdi mdi-cloud-upload"></i>
+                        <!-- START PAGE CONTENT -->
+
+                        <div class="row">
+                            <form id="frmCreateEmployee" class="col-lg-12 card-box">
+                                <div class="col-lg-8 mt-2" style="float: left">
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="nameEmployee" class="col-form-label">Tên nhân viên <span
+                                                    style="color: red">*</span></label>
+                                            <input id="nameEmployee" name="nameEmployee"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập họ tên ...">
                                         </div>
-                                        <div class="text font-weight-bold">
-                                            Chưa có tệp nào được chọn!
+                                        <div class="form-group col-lg-6">
+                                            <label for="salaryEmployee" class="col-form-label">Mức Lương <span style="color: red">*</span></label>
+                                            <input id="salaryEmployee" name="salaryEmployee"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập email ...">
                                         </div>
                                     </div>
-                                    <div class="clear-image-preview">
-                                        <!--                          <i class="fa fa-times"></i>-->
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="phoneEmployee" class="col-form-label">Số điện thoại <span style="color: red">*</span></label>
+                                            <input id="phoneEmployee" name="phoneEmployee"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập số điện thoại ...">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="dateOfJoiningEmployee" class="col-form-label">Ngày vào làm <span
+                                                    style="color: red">*</span></label>
+                                            <input class="form-control" type="date" name="dateOfJoiningEmployee" id="dateOfJoiningEmployee">
+                                        </div>
                                     </div>
-                                    <div class="file-name">
-                                        CHỌN THAY ĐỔI
+                                    <div class="row">
+                                        <div class="form-group col-lg-3">
+                                            <label for="provinceId" class="col-form-label">Tỉnh/Thành Phố</label>
+                                            <select id="provinceId" name="provinceId"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label for="districtId" class="col-form-label">Quận/Huyện</label>
+                                            <select id="districtId" name="districtId"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label for="wardId" class="col-form-label">Phường/Xã</label>
+                                            <select id="wardId" name="wardId"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label for="address" class="col-form-label">Địa chỉ</label>
+                                            <input id="address" name="address"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập địa chỉ">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="departmentIdEmployee" class="col-form-label">Phòng
+                                            </label>
+                                            <select id="departmentIdEmployee" name="departmentIdEmployee"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="roleIdEmployee" class="col-form-label">Chức vụ
+                                            </label>
+                                            <select id="roleIdEmployee" name="roleIdEmployee"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <input type="file" id="imageFileCre" name="imageFileCre" accept="image/jpeg, image/png"
-                                       style="height: 0; opacity: 0;"/>
+
+                                <div class="col-lg-4 mt-3" style="float: left">
+                                    <div class="card" id="cardId" style="margin: 0 auto; height: 200px;left: 77px;top: 46px; !important; ">
+                                        <div class="wrappers">
+                                            <div class="image-preview">
+                                                <canvas id="canvas"></canvas>
+                                            </div>
+                                            <div class="content" style="opacity: 1;">
+                                                <div class="icon">
+                                                    <i class="mdi mdi-cloud-upload"></i>
+                                                </div>
+                                                <div class="text font-weight-bold">
+                                                    Chưa có tệp nào được chọn!
+                                                </div>
+                                            </div>
+                                            <div class="clear-image-preview">
+                                                <!--                          <i class="fa fa-times"></i>-->
+                                            </div>
+                                            <div class="file-name">
+                                                CHỌN THAY ĐỔI
+                                            </div>
+                                        </div>
+                                        <input type="file" id="imageFile" name="imageFile" accept="image/jpeg, image/png"
+                                               style="height: 0; opacity: 0;"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <button type="button" id="btnCreate" class="btn btn-primary">THÊM MỚI</button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <!-- END PAGE CONTENT -->
 
-                <div class="row">
-                    <div class="col-lg-6">
-                        <button type="button" id="btnCreate" class="btn btn-primary">THÊM MỚI</button>
-                    </div>
-                </div>
-                <!-- END PAGE CONTENT -->
+                    </div> <!-- container -->
 
-            </div> <!-- container -->
+                </div> <!-- content -->
 
-        </div> <!-- content -->
-
+            </div>
+        </div>
     </div>
+
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="../../static/assets/iziToast/dist/js/iziToast.min.js"></script>
 <script src="/AppUtils.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     const page = {
         urls: {
@@ -383,23 +427,7 @@
         page.elements.btnCreate.prop('disabled', false);
     }
 
-    page.commands.loadData = () => {
-        page.commands.getAllEmployee();
 
-        page.commands.getAllEmployee();
-        page.loadData.getAllRole();
-        page.loadData.getAllDepartment();
-
-        page.commands.getAllProvinces();
-        page.commands.getAllProvinces().then(() => {
-            let provinceId = page.elements.provinceId.val();
-            page.commands.getAllDistrictsByProvinceId(provinceId).then(() => {
-                let districtId = page.elements.provinceId.val();
-                page.commands.getAllWardsByDistrictId(districtId);
-            });
-        });
-
-    }
 
     page.commands.checkValidate = () => {
         let length = $("#frmCreateEmployee input[type='text'].error").length;
@@ -457,7 +485,7 @@
         errorPlacement: function (error) {
             error.appendTo(".footer section.accordion .content");
         },
-        showErrors: function () {
+        showErrors: function (errorList) {
             if (this.errorList.length > 0) {
                 page.elements.footerAccordion.removeClass("hide").addClass("show");
                 page.elements.accordionCollapse.prop("checked", true);
@@ -577,6 +605,24 @@
 
     page.commands.removeHandleShowModal = () => {
         $(".create").off("click");
+    }
+
+    page.commands.loadData = () => {
+        page.commands.getAllEmployee();
+
+        page.commands.getAllEmployee();
+        page.commands.getAllRole();
+        page.commands.getAllDepartment();
+
+        page.commands.getAllProvinces();
+        page.commands.getAllProvinces().then(() => {
+            let provinceId = page.elements.provinceId.val();
+            page.commands.getAllDistrictsByProvinceId(provinceId).then(() => {
+                let districtId = page.elements.provinceId.val();
+                page.commands.getAllWardsByDistrictId(districtId);
+            });
+        });
+
     }
 
     page.initializeEventControl = () => {
