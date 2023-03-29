@@ -29,7 +29,7 @@ public class EmployeeCreateDTO  implements Validator {
     private String salary;
     private String experience;
     private String dateOfJoining;
-    private Long phone;
+    private String phone;
 
     private String provinceId;
 

@@ -30,7 +30,7 @@ public class EmployeeUpdateDTO implements Validator {
     private String salary;
     private String experience;
     private String dateOfJoining;
-    private Long phone;
+    private String phone;
 
     private Long locationRegionId;
 

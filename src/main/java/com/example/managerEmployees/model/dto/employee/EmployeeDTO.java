@@ -26,7 +26,7 @@ public class EmployeeDTO {
     private BigDecimal salary ;
     private String experience;
     private String dateOfJoining;
-    private Long phone;
+    private String phone;
     private RoleDTO role;
     private LocationRegionDTO locationRegion;
 
@@ -35,7 +35,7 @@ public class EmployeeDTO {
 
     private DepartmentDTO department;
 
-    public EmployeeDTO(Long id, String name, BigDecimal salary, String experience, LocalDate dateOfJoining, Long phone, Role role, LocationRegion locationRegion, EmployeeAvatar emloyeeAvatar, Department department) {
+    public EmployeeDTO(Long id, String name, BigDecimal salary, String experience, LocalDate dateOfJoining, String phone, Role role, LocationRegion locationRegion, EmployeeAvatar emloyeeAvatar, Department department) {
         this.id = id;
         this.name = name;
         this.salary = salary;

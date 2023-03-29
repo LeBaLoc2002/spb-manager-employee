@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/iziToast/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="/assets/css/preview-image-css.css">
+
 </head>
 <body>
 <div class="container-fluid" style="background-color: #f7f6fd; height: 100vh;">
@@ -84,7 +85,7 @@
                             <form id="frmCreateEmployee" class="col-lg-12 card-box">
                                 <div class="col-lg-8 mt-2" style="float: left">
                                     <div class="row">
-                                        <div class="form-group col-lg-6">
+                                        <div class="form-group col-lg-4">
                                             <label for="nameEmployee" class="col-form-label">Tên nhân viên <span
                                                     style="color: red">*</span></label>
                                             <input id="nameEmployee" name="nameEmployee"
@@ -92,12 +93,20 @@
                                                    class="form-control"
                                                    placeholder="Nhập họ tên ...">
                                         </div>
-                                        <div class="form-group col-lg-6">
+                                        <div class="form-group col-lg-4">
                                             <label for="salaryEmployee" class="col-form-label">Mức Lương <span style="color: red">*</span></label>
                                             <input id="salaryEmployee" name="salaryEmployee"
                                                    type="text"
                                                    class="form-control"
                                                    placeholder="Nhập email ...">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="experienceEmployee" class="col-form-label">Kinh nghiệm nhân viên <span
+                                                    style="color: red">*</span></label>
+                                            <input id="experienceEmployee" name="experienceEmployee"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập kinh nghiệm">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -203,10 +212,13 @@
     </div>
 
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="../../static/assets/iziToast/dist/js/iziToast.min.js"></script>
-<script src="/AppUtils.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/assets/js/jQuery.3.6.1.js"></script>
+<script  src="../../static/assets/iziToast/dist/js/iziToast.min.js"></script>
+<script  src="/assets/js/jquery.validate-1.19.5.min.js"></script>
+<script  src="/AppUtils.js"></script>
+
+
+
 <script>
     const page = {
         urls: {
@@ -241,12 +253,12 @@
 
     page.elements.imageFile = $("#imageFile");
     page.elements.canvas = $("#canvas");
-    page.elements.wrapper = $("#frmCreateEmployee section .wrappers");
-    page.elements.wrapperContent = $("#frmCreateEmployee section .wrappers .content");
-    page.elements.imagePreview = $("#frmCreateEmployee section .image-preview canvas");
+    page.elements.wrapper = $("#frmCreateEmployee .wrappers");
+    page.elements.wrapperContent = $("#frmCreateEmployee .wrappers .content");
+    page.elements.imagePreview = $("#frmCreateEmployee .image-preview canvas");
     page.elements.imagePreview.css("display", "none");
     page.elements.context = page.elements.canvas[0].getContext('2d');
-    // page.dialogs.elements.context = null;
+    // page.elements.context = null;
     page.elements.divImagePreview = $("#frmCreateEmployee div.image-preview, #frmCreateEmployee div.file-name");
     page.elements.btnClearImagePreview = $(".clear-image-preview i");
 
@@ -257,8 +269,15 @@
     page.elements.footerContent = $(".footer section.accordion .content");
     page.elements.accordionCollapse = $('input[name=collapse]');
 
+    page.elements.tbEmployee = $("#tbEmployee");
+    page.elements.tbBdEmployee = $("#tbEmployee tbody");
+
     let employeeAvatar = new EmployeeAvatar();
     let employee = new Employee();
+
+    let locationRegion = new LocationRegion();
+    let department = new Department();
+    let role = new Role();
 
     page.commands.getAllRole = () => {
         return $.ajax({
@@ -269,8 +288,8 @@
             type: "GET",
             url: page.urls.getAllRole
         }).done((data) => {
-            let results = data.results;
-            page.elements.roleIdEmployee.append('<option disabled selected hidden>Chọn role</option>');
+            let results = data;
+            page.elements.roleIdEmployee.prepend('<option disabled selected hidden>Chọn role</option>');
             results.map(item => {
                 let str = `<option value="${item.id}">${item.code}</option>`;
                 page.elements.roleIdEmployee.append(str)
@@ -289,8 +308,8 @@
             type: "GET",
             url: page.urls.getAllDepartment,
         }).done((data) => {
-            let results = data.results;
-            page.elements.departmentIdEmployee.append('<option disabled selected hidden>Chọn phòng ban</option>');
+            let results = data;
+            page.elements.departmentIdEmployee.prepend('<option disabled selected hidden>Chọn phòng ban</option>');
             results.map(item => {
                 let str = `<option value="${item.id}">${item.name}</option>`;
                 page.elements.departmentIdEmployee.append(str)
@@ -311,9 +330,9 @@
         })
             .done((data) => {
                 let results = data.results;
-                page.elements.provinceId.append('<option disabled selected hidden>Chọn Tỉnh/Thành Phố</option>');
+                page.elements.provinceId.prepend('<option disabled selected hidden>Chọn Tỉnh/Thành Phố</option>');
                 results.map(item => {
-                    let str = `<option value="${item.provinceId}">${item.provinceName}</option>`;
+                    let str = `<option value="${item.province_id}">${item.province_name}</option>`;
                     page.elements.provinceId.append(str);
                 })
             })
@@ -337,9 +356,10 @@
                 page.elements.districtId.append('<option disabled selected hidden>Chọn Quận/Huyện</option>');
 
                 let results = data.results;
+                console.log(results)
 
                 results.map(item => {
-                    let str = `<option value="${item.districtId}">${item.districtName}</option>`;
+                    let str = `<option value="${item.district_id}">${item.district_name}</option>`;
                     page.elements.districtId.append(str);
                 })
             })
@@ -362,9 +382,11 @@
 
                 page.elements.wardId.append('<option disabled selected hidden>Chọn Phường/Xã</option>');
                 let results = data.results;
+                console.log(results)
 
                 results.map(item => {
-                    let str = `<option value="${item.wardId}">${item.wardName}</option>`;
+                    console.log(item)
+                    let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
                     page.elements.wardId.append(str);
                 })
             })
@@ -372,6 +394,82 @@
                 AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_WARD);
             })
     }
+
+    page.commands.checkValidate = () => {
+        let length = $("#frmCreateEmployee input[type='text'].error").length;
+
+        if (length === 0) {
+            page.elements.footerAccordion.removeClass("show").addClass("hide");
+            page.elements.footerContent.empty();
+            page.elements.accordionCollapse.prop("checked", false);
+            page.elements.btnCreate.removeClass("hide");
+        }
+    }
+
+    page.elements.frmCreateEmployee.validate({
+        rules: {
+            nameEmployee: {
+                required: true,
+            },
+            salaryEmployee: {
+                required: true,
+                number: true,
+                // minlength: 1000,
+                // maxlength: 100000
+            },
+            experienceEmployee: {
+                required: true,
+            },
+            dateOfJoiningEmployee: {
+                required: true,
+            },
+            phoneEmployee: {
+                required: true,
+            }
+        },
+        messager: {
+            nameEmployee: {
+                required: "Vui lòng nhập tên nhân viên.",
+            },
+            salaryEmployee: {
+                required: "Vui lòng nhập lương của nhân viên",
+                number: "Lương phải là  định dạng số ",
+                // minlength: "Số lương tối thiểu là 1000 $",
+                // maxlength: "Số lương tối đa là 100000 $"
+            },
+            experienceEmployee: {
+                required: "Vui lòng nhập kinh nghiệm nhân viên.",
+            },
+            dateOfJoiningEmployee: {
+                required: "Vui lòng nhập ngày tham gia vào",
+            },
+            phoneEmployee: {
+                required: "Vui lòng nhập số điện thoại nhân viên",
+            }
+        },
+        errorLabelContainer: ".footer section.accordion .content",
+        errorPlacement: function (error) {
+            error.appendTo(".footer section.accordion .content");
+        },
+        showErrors: function (errorList) {
+            if (this.errorList.length > 0) {
+                page.elements.footerAccordion.removeClass("hide").addClass("show");
+                page.elements.accordionCollapse.prop("checked", true);
+                page.elements.btnCreate.addClass("hide");
+            } else {
+                page.elements.footerAccordion.removeClass("show").addClass("hide");
+                page.elements.footerContent.empty();
+                page.elements.accordionCollapse.prop("checked", false);
+                page.elements.btnCreate.removeClass("hide");
+
+                $("#frmCreateEmployee input.error").removeClass("error");
+            }
+            this.defaultShowErrors();
+        },
+        submitHandler: function () {
+            page.commands.createEmployee();
+        }
+    })
 
 
     page.commands.loadImageToCanvas = (imageFile) => {
@@ -428,82 +526,65 @@
     }
 
 
+    page.commands.renderEmployee = (employee) => {
+        let image_thumbnail = AppUtils.BASE_URL_CLOUD_IMAGE + "/"
+            + AppUtils.SCALE_IMAGE_W60_H60_Q100 + "/"
+            + employee.emloyeeAvatar.fileFolder + "/"
+            + employee.emloyeeAvatar.fileName;
 
-    page.commands.checkValidate = () => {
-        let length = $("#frmCreateEmployee input[type='text'].error").length;
+        return `
+            <tr id="tr_${employee.id}" class="text-center">
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td >
+                    <img class="avatar" src=${image_thumbnail} alt="${employee.emloyeeAvatar.fileName}">
+                </td>
+                <td >
+                    <span>${employee.name}</span>
+                </td>
+                <td >
+                    ${employee.id}
+                </td>
+                <td >
+                   ${employee.department.name}
+                </td>
+                <td >
+                    ${employee.role.code}
+                </td>
+                <td >
+                    ${employee.experience}
+                </td>
+                <td >
+                   ${employee.salary}
+                </td>
+                <td>
+                    ${employee.dateOfJoining}
+                </td>
+                <td>
+                   ${employee.phone}
+                </td>
+                <td>
+                      <button data-id="${employee.id}"
+                        data-avatar-id = "${employee.emloyeeAvatar.id}"
+                        data-avatar-file-folder = "${employee.emloyeeAvatar.fileFolder}"
+                        data-avatar-file-name = "${employee.emloyeeAvatar.fileName}"
+                        class="btn btn-outline-primary update">
+                           <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </button>
 
-        if (length === 0) {
-            page.elements.footerAccordion.removeClass("show").addClass("hide");
-            page.elements.footerContent.empty();
-            page.elements.accordionCollapse.prop("checked", false);
-            page.elements.btnCreate.removeClass("hide");
-        }
+                </td>
+                <td>
+                       <button data-id="${employee.id}"
+                        class="btn btn-outline-danger delete">
+                           <i class="fa fa-ban" aria-hidden="true"></i>
+                        </button>
+                </td>
+            </tr>
+
+        </tr>
+    `;
     }
-
-    page.elements.frmCreateEmployee.validate({
-        rules: {
-            nameEmployee: {
-                required: true,
-            },
-            salaryEmployee: {
-                required: true,
-                number: true,
-                minlength: 1000,
-                maxlength: 100000
-            },
-            experienceEmployee: {
-                required: true,
-            },
-            dateOfJoiningEmployee: {
-                required: true,
-            },
-            phoneEmployee: {
-                required: true,
-            }
-        },
-        messager: {
-            nameEmployee: {
-                required: "Vui lòng nhập tên nhân viên.",
-            },
-            salaryEmployee: {
-                required: "Vui lòng nhập lương của nhân viên",
-                number: "Lương phải là  định dạng số ",
-                minlength: "Số lương tối thiểu là 1000 $",
-                maxlength: "Số lương tối đa là 100000 $"
-            },
-            experienceEmployee: {
-                required: "Vui lòng nhập kinh nghiệm nhân viên.",
-            },
-            dateOfJoiningEmployee: {
-                required: "Vui lòng nhập ngày tham gia vào",
-            },
-            phoneEmployee: {
-                required: "Vui lòng nhập số điện thoại nhân viên",
-            }
-        },
-        errorLabelContainer: ".footer section.accordion .content",
-        errorPlacement: function (error) {
-            error.appendTo(".footer section.accordion .content");
-        },
-        showErrors: function (errorList) {
-            if (this.errorList.length > 0) {
-                page.elements.footerAccordion.removeClass("hide").addClass("show");
-                page.elements.accordionCollapse.prop("checked", true);
-                page.elements.btnCreate.addClass("hide");
-            } else {
-                page.elements.footerAccordion.removeClass("show").addClass("hide");
-                page.elements.footerContent.empty();
-                page.elements.accordionCollapse.prop("checked", false);
-                page.elements.btnCreate.removeClass("hide");
-
-                $("#frmCreateEmployee input.error").removeClass("error");
-            }
-            this.defaultShowErrors();
-        },
-        submitHandler: function () {
-            page.commands.createEmployee();
-        }
-    })
 
     page.commands.createEmployee = () => {
         locationRegion.provinceId = page.elements.provinceId.val();
@@ -533,8 +614,8 @@
         formData.append("name", employee.name);
         formData.append("salary", employee.salary);
         formData.append("experience", employee.experience);
-        formData.append("dateOfJoining", employee.experience);
-        formData.append("phone", employee.phone)
+        formData.append("dateOfJoining", employee.dateOfJoining);
+        formData.append("phone", page.elements.phoneEmployee.val());
         formData.append("provinceId", locationRegion.provinceId);
         formData.append("provinceName", locationRegion.provinceName);
         formData.append("districtId", locationRegion.districtId);
@@ -594,14 +675,13 @@
             $.each(data, (i, item) => {
                 employee = item;
                 page.elements.tbEmployee.prepend(page.commands.renderEmployee(employee));
-                page.commands.handleShowConfirmDelete();
+                // page.commands.handleShowConfirmDelete();
                 page.commands.removeHandleShowModal();
             })
         }).fail((error) => {
             AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_EMPLOYEE);
         })
     }
-
 
     page.commands.removeHandleShowModal = () => {
         $(".create").off("click");
@@ -610,7 +690,6 @@
     page.commands.loadData = () => {
         page.commands.getAllEmployee();
 
-        page.commands.getAllEmployee();
         page.commands.getAllRole();
         page.commands.getAllDepartment();
 
@@ -630,6 +709,7 @@
             let provinceIdCre = $(this).val();
             page.commands.getAllDistrictsByProvinceId(provinceIdCre).then(() => {
                 let districtIdCre = page.elements.districtId.val();
+                console.log(districtIdCre);
                 page.commands.getAllWardsByDistrictId(districtIdCre);
             })
         })

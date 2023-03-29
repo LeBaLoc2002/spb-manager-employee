@@ -165,7 +165,7 @@ public class EmployeeImpl implements IEmployeeService {
         String experience = employeeCreateDTO.getExperience();
 
         LocalDate dateOfJoining = LocalDate.parse(employeeCreateDTO.getDateOfJoining());
-        Long phone = employeeCreateDTO.getPhone();
+        String phone = employeeCreateDTO.getPhone();
 
         MultipartFile file = employeeCreateDTO.getFile();
         String fileType = file.getContentType();
@@ -241,7 +241,7 @@ public class EmployeeImpl implements IEmployeeService {
         BigDecimal salary = employeeDTO.getSalary();
         String experience = employeeDTO.getExperience();
         LocalDate dateOfJoining = LocalDate.parse(employeeDTO.getDateOfJoining());
-        Long phone = employeeDTO.getPhone();
+        String phone = employeeDTO.getPhone();
         String roleId = String.valueOf(employeeDTO.getRole().getId());
         String locationRegionId = String.valueOf(employeeDTO.getLocationRegion().getId());
         String emloyeeAvatarId = employeeDTO.getEmloyeeAvatar().getId();

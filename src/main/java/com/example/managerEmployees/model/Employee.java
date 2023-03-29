@@ -30,7 +30,7 @@ public class Employee extends BaseEntity{
 
     private LocalDate dateOfJoining;
 
-    private Long phone;
+    private String phone;
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
