@@ -1,0 +1,34 @@
+.fl-l {
+    float: left;
+}
+
+.fl-r {
+    float: right;
+}
+
+.mg-10 {
+    margin: 10px;
+}
+
+.mgc-40-10 {
+    margin-top: 40px;
+    margin-right: 10px;
+}
+
+header {
+    text-align: center;
+    height: 100px;
+    padding-top: 25px;
+    background-color: #fff;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+}

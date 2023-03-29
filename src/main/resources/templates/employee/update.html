@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    const page = {
+        urls: {
+            getAllRole: AppUtils.GETALLROLE_URL,
+            getAllDepartment: AppUtils.GETALLDEPARTMENT_URL,
+            getAllProvinces: AppUtils.PROVINCE_URL,
+            getAllDistrictsByProvinceId: AppUtils.PROVINCE_URL + "district/",
+            getAllWardsByDistrictId: AppUtils.PROVINCE_URL + "ward/",
+            getAllEmployee: AppUtils.GETALLEMPLOYEE_URL,
+            updateEmployee : AppUtils.EMPLOYEE_URL,
+
+        },
+        elements: {},
+        loadData: {},
+        commands: {},
+        alertDanger: {},
+        initializeEventControl: {}
+    }
+
+    page.elements.frmUpdateEmployee = $("#frmUpdateEmployee");
+    page.elements.nameEmployeeUp = $("#nameEmployee");
+    page.elements.salaryEmployeeUp = $("#salaryEmployee");
+    page.elements.experienceEmployeeUp = $("#experienceEmployee");
+    page.elements.dateOfJoiningEmployeeUp = $("#dateOfJoiningEmployee");
+    page.elements.phoneEmployeeUp = $("#phoneEmployee");
+    page.elements.roleIdEmployeeUp = $("#roleIdEmployee");
+    page.elements.departmentIdEmployeeUp = $("#departmentIdEmployeeUp");
+    page.elements.provinceIdUp = $("#provinceId");
+    page.elements.districtIdUp = $("#districtId");
+    page.elements.wardIdUp = $("#wardId");
+    page.elements.addressUp = $("#address");
+    page.elements.btnUpdate = $ ("#btnUpdate");
+
+    page.elements.imageFileUp = $("#imageFile");
+    page.elements.canvasUp = $("#canvas");
+    page.elements.wrapperUp= $("#frmUpdateEmployee section .wrappers");
+    page.elements.wrapperContentUp = $("#frmUpdateEmployee section .wrappers .content");
+    page.elements.imagePreviewUp = $("#frmUpdateEmployee section .image-preview canvas");
+    page.elements.imagePreviewUp.css("display", "none");
+    page.elements.contextUp = page.elements.canvasUp[0].getContext('2d');
+    // page.dialogs.elements.context = null;
+    page.elements.divImagePreviewUp = $("#frmUpdateEmployee div.image-preview, #frmUpdateEmployee div.file-name");
+    page.elements.btnClearImagePreviewUp = $(".clear-image-preview i");
+
+    page.alertDanger.frmUpdateEmployee = $("#frmUpdateEmployee .frm-alert-danger");
+
+    page.elements.loader = $(".loader");
+    page.elements.footerAccordion = $(".footer section.accordion");
+    page.elements.footerContent = $(".footer section.accordion .content");
+    page.elements.accordionCollapse = $('input[name=collapse]');
+
+    let employeeAvatar = new EmployeeAvatar();
+    let employee = new Employee();
+
+    page.elements.getAllEmployeeById = (employeeId) => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getAllEmployee + employeeId
+        }).done((data) => {
+            employee = data;
+        }).fail((jqXHR) => {
+            let errors = jqXHR.response;
+            if (errors) {
+                let str = "";
+                $.each(data, (k, v) => {
+                    str += `
+                   ${v}
+                   `;
+                })
+                AppUtils.SweetAlert.showErrorAlert(str);
+            }
+        })
+    }
+
+    page.elements.frmUpdateEmployee.validate({
+        rules: {
+            nameEmployeeUp: {
+                required: true,
+            },
+            salaryEmployeeUp: {
+                required: true,
+                number: true,
+                minlength: 1000,
+                maxlength: 100000
+            },
+            experienceEmployeeUp: {
+                required: true,
+            },
+            dateOfJoiningEmployeeUp: {
+                required: true,
+            },
+            phoneEmployeeUp: {
+                required: true,
+            }
+        },
+        messager: {
+            nameEmployeeUp: {
+                required: "Vui lòng nhập tên nhân viên.",
+            },
+            salaryEmployeeUp: {
+                required: "Vui lòng nhập lương của nhân viên",
+                number: "Lương phải là  định dạng số ",
+                minlength: "Số lương tối thiểu là 1000 $",
+                maxlength: "Số lương tối đa là 100000 $"
+            },
+            experienceEmployeeUp: {
+                required: "Vui lòng nhập kinh nghiệm nhân viên.",
+            },
+            dateOfJoiningEmployeeUp: {
+                required: "Vui lòng nhập ngày tham gia vào",
+            },
+            phoneEmployeeUp: {
+                required: "Vui lòng nhập số điện thoại nhân viên",
+            }
+        },
+        errorLabelContainer: ".footer section.accordion .content",
+        errorPlacement: function (error) {
+            error.appendTo(".footer section.accordion .content");
+        },
+        showErrors: function () {
+            if (this.errorList.length > 0) {
+                page.elements.footerAccordion.removeClass("hide").addClass("show");
+                page.elements.accordionCollapse.prop("checked", true);
+                page.elements.btnCreate.addClass("hide");
+            } else {
+                page.elements.footerAccordion.removeClass("show").addClass("hide");
+                page.elements.footerContent.empty();
+                page.elements.accordionCollapse.prop("checked", false);
+                page.elements.btnCreate.removeClass("hide");
+
+                $("#frmUpdateEmployee input.error").removeClass("error");
+            }
+            this.defaultShowErrors();
+        },
+        submitHandler: function () {
+            page.commands.updateEmployee();
+        }
+    })
+    page.commands.updateEmployee = () =>{
+
+        locationRegion.provinceId = page.elements.provinceIdUp.val();
+        locationRegion.provinceName = page.elements.provinceIdUp.find("option:selected").text();
+        locationRegion.districtId = page.elements.districtIdUp.val();
+        locationRegion.districtName = page.elements.districtIdUp.find("option:selected").text();
+        locationRegion.wardId = page.elements.wardIdUp.val();
+        locationRegion.wardName = page.elements.wardIdUp.find("option:selected").text();
+        locationRegion.address = page.elements.addressUp.val();
+
+        department.id = page.elements.departmentIdEmployeeUp.val();
+        department.name = page.elements.departmentIdEmployeeUp.find("option:selected").text();
+        role.id = page.elements.roleIdEmployeeUp.val();
+        role.code = page.elements.roleIdEmployeeUp.find("option:selected").text();
+        employee.department = department;
+        employee.role = role;
+        employee.locationRegion = locationRegion;
+
+        employee.name = page.elements.nameEmployeeUp.val();
+        employee.salary = page.elements.salaryEmployeeUp.val();
+        employee.experience = page.elements.experienceEmployeeUp.val();
+        employee.dateOfJoining = page.elements.dateOfJoiningEmployeeUp.val();
+        employee.phone = page.elements.phoneEmployeeUp.val();
+
+
+        let formData = new FormData();
+        formData.append("name", employee.name);
+        formData.append("salary", employee.salary);
+        formData.append("experience", employee.experience);
+        formData.append("dateOfJoining", employee.experience);
+        formData.append("phone", employee.phone)
+        formData.append("provinceId", locationRegion.provinceId);
+        formData.append("provinceName", locationRegion.provinceName);
+        formData.append("districtId", locationRegion.districtId);
+        formData.append("districtName", locationRegion.districtName);
+        formData.append("wardId", locationRegion.wardId);
+        formData.append("wardName", locationRegion.wardName);
+        formData.append("address", locationRegion.address)
+        formData.append("departmentId", department.id);
+        formData.append("roleId", role.id);
+        formData.append("file", page.elements.imageFileUp[0].files[0]);
+        page.commands.showLoading();
+
+        $.ajax({
+            type: "PATCH",
+            contentType: false,
+            cache: false,
+            processData: false,
+            url: page.urls.updateEmployee + [[${staffId}]],
+            data: formData,
+        }).done((data) => {
+            employee = data;
+            page.elements.frmCreateEmployee[0].reset();
+            page.elements.clearImagePreview();
+            AppUtils.IziToast.showSuccessAlert("Thêm mới nhân viên <b>'" + employee.name + "'</b> thành công.");
+            page.commands.removeHandleShowModal();
+        }).fail((jqXHR) => {
+            let str = ``;
+            if (jqXHR.responseJSON) {
+                if (jqXHR.responseJSON.message) {
+                    str += `<label id="message-error" class="error" for="message">${jqXHR.responseJSON.message}</label>`;
+                } else {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                        $("#" + key).addClass("error");
+                    });
+                }
+                page.elements.footerAccordion.removeClass("hide").addClass("show");
+                page.elements.accordionCollapse.prop("checked", true);
+                page.elements.footerContent.css({display: ""});
+                page.elements.btnCreate.addClass("hide");
+                page.elements.footerContent.html(str);
+            } else {
+                AppUtils.SweetAlert.showError500Vi();
+            }
+        }).always(function () {
+            page.commands.closeLoading();
+        })
+    };
+
+    page.commands.getAllRole = () => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type :"GET",
+            url: page.urls.getAllRole
+        }).done((data) => {
+            let results = data.results;
+            page.elements.roleIdEmployee.append('<option disabled selected hidden>Chọn role</option>');
+            results.map(item => {
+                let str = `<option value="${item.id}">${item.code}</option>`;
+                page.elements.roleIdEmployee.append(str)
+            })
+        }).fail((error) => {
+            AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_ROLE);
+        })
+    }
+    page.commands.getAllDepartment = () => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type : "GET",
+            url: page.urls.getAllDepartment,
+        }).done((data) => {
+            let results = data.results;
+            page.elements.departmentIdEmployee.append('<option disabled selected hidden>Chọn phòng ban</option>');
+            results.map(item => {
+                let str = `<option value="${item.id}">${item.name}</option>`;
+                page.elements.departmentIdEmployee.append(str)
+            })
+        }).fail ((error) => {
+            AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_DEPARTMENT);
+        })
+    }
+
+    page.commands.getAllEmployee = () => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getAllEmployee
+        }).done((data) => {
+            $.each(data, (i, item) => {
+                employee = item;
+                page.elements.tbEmployee.prepend(page.commands.renderEmployee(employee));
+                page.commands.handleShowConfirmDelete();
+                page.commands.removeHandleShowModal();
+            })
+        }).fail((error) => {
+            AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_EMPLOYEE);
+        })
+    }
+
+    page.commands.getAllProvinces = () => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getAllProvinces
+        })
+            .done((data) => {
+                let results = data.results;
+                page.elements.provinceIdUp.append('<option disabled selected hidden>Chọn Tỉnh/Thành Phố</option>');
+                results.map(item => {
+                    let str = `<option value="${item.provinceId}">${item.provinceName}</option>`;
+                    page.elements.provinceIdUp.append(str);
+                })
+
+            })
+            .fail((error) => {
+                AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_PROVINCE);
+            })
+    }
+
+    page.commands.getAllDistrictsByProvinceId = (provinceId) => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getAllDistrictsByProvinceId + provinceId
+        })
+            .done((data) => {
+                page.elements.districtIdUp.empty();
+
+                page.elements.districtIdUp.append('<option disabled selected hidden>Chọn Quận/Huyện</option>');
+
+                let results = data.results;
+
+                results.map(item => {
+                    let str = `<option value="${item.districtId}">${item.districtName}</option>`;
+                    page.elements.districtIdUp.append(str);
+                })
+            })
+            .fail((error) => {
+                AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_DISTRICT);
+            })
+    }
+
+    page.commands.getAllWardsByDistrictId = (districtId) => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getAllWardsByDistrictId + districtId
+        })
+            .done((data) => {
+                page.elements.wardIdUp.empty();
+
+                page.elements.wardIdUp.append('<option disabled selected hidden>Chọn Phường/Xã</option>');
+                let results = data.results;
+
+                results.map(item => {
+                    let str = `<option value="${item.wardId}">${item.wardName}</option>`;
+                    page.elements.wardIdUp.append(str);
+                })
+            })
+            .fail((error) => {
+                AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_WARD);
+            })
+    }
+
+    page.commands.loadImageToCanvasUp = (imageFile) => {
+        page.elements.imagePreviewUp.css("display", "");
+        page.elements.wrapperUp.addClass("active");
+        page.elements.wrapperContentUp.css("opacity", 0);
+
+        let imageObj = new Image();
+
+        imageObj.onload = function () {
+            page.elements.context.canvasUp.width = imageObj.width;
+            page.elements.context.canvasUp.height = imageObj.height;
+            page.elements.context.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
+        };
+
+        imageObj.src = URL.createObjectURL(imageFile);
+    }
+
+    page.commands.changeImagePreviewUp = () => {
+        let imageFile = page.elements.imageFileUp[0].files[0];
+
+        if (imageFile) {
+            let reader = new FileReader();
+
+            reader.readAsDataURL(imageFile);
+
+            reader.onload = function (e) {
+                if (e.target.readyState === FileReader.DONE) {
+                    page.commands.loadImageToCanvasUp(imageFile);
+                }
+            }
+
+            $("#imageFile-error").remove();
+
+            page.commands.checkValidate();
+        }
+        else {
+            page.elements.clearImagePreview();
+        }
+    }
+
+    page.elements.clearImagePreviewUp = () => {
+        page.elements.imageFileUp.val("");
+        page.elements.imagePreviewUp.css("display", "none");
+        page.elements.wrapperUp.removeClass("active");
+        page.elements.wrapperContentUp.css("opacity", 1);
+    }
+
+    page.commands.showLoading = () => {
+        page.elements.loader.removeClass("hide");
+        page.elements.btnUpdate.prop('disabled', true);
+    }
+
+    page.commands.closeLoading = () => {
+        page.elements.loader.addClass("hide");
+        page.elements.btnUpdate.prop('disabled', false);
+    }
+
+    page.commands.loadData = () => {
+
+        let employeeId = [[${employeeId}]];
+        page.loadData.getAllEmployeeById(employeeId);
+
+        page.commands.getAllEmployee();
+        page.commands.getAllRole();
+        page.commands.getAllDepartment();
+        page.commands.getAllProvinces();
+        page.commands.getAllProvinces().then(() => {
+            let provinceId = page.elements.provinceIdUp.val();
+            page.commands.getAllDistrictsByProvinceId(provinceId).then(() => {
+                let districtId = page.elements.provinceIdUp.val();
+                page.commands.getAllWardsByDistrictId(districtId);
+            });
+        });
+    }
+
+
+
+
+    page.commands.handleTooltip = () => {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+
+    page.commands.checkValidate = () => {
+        let length = $("#frmUpdateEmployee input[type='text'].error").length;
+
+        if (length === 0) {
+            page.elements.footerAccordion.removeClass("show").addClass("hide");
+            page.elements.footerContent.empty();
+            page.elements.accordionCollapse.prop("checked", false);
+            page.elements.btnUpdate.removeClass("hide");
+        }
+    }
+
+    page.commands.removeHandleShowModal = () => {
+        $(".create").off("click");
+    }
+
+    page.initializeEventControl = () => {
+
+        page.elements.divImagePreviewUp.on("click", function () {
+            page.elements.imageFileUp.trigger("click");
+        });
+
+        page.elements.imageFileUp.on("change", function () {
+            page.commands.changeImagePreviewUp();
+        });
+
+        page.elements.btnClearImagePreviewUp.on("click", function () {
+            page.elements.clearImagePreviewUp();
+        });
+
+        page.elements.btnUpdate.on("click", () => {
+            page.elements.frmUpdateEmployee.trigger("submit");
+        });
+    }
+
+    $(() => {
+        page.commands.loadData();
+        page.initializeEventControl();
+    });
+
+</script>
+
+</body>
+</html>
