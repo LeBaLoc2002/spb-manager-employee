@@ -2,9 +2,220 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking the employee growth</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/iziToast/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/assets/css/preview-image-css.css">
 </head>
 <body>
+<div class="container-fluid" style="background-color: #f7f6fd; height: 100vh;">
+    <header>
+        <div class="container">
+            <div class="col-1 fl-l">
+                <img class="logo" src="/assets/images/logo-128.png" alt="">
+            </div>
+            <div class="col-10 fl-l">
+                <div style="position: absolute; left: 40%;">
+                    <div class="fl-l mg-10">
+                        Dashboard
+                    </div>
+                    <div class="fl-l mg-10">
+                        Departments
+                    </div>
+                    <div class="fl-l mg-10">
+                        Empoyees
+                    </div>
+                </div>
+            </div>
+            <div class="col-1 fl-r">
+                <img class="avatar" src="/assets/images/User-Avatar-Profile-128.png" alt="">
+            </div>
+        </div>
+    </header>
+
+    <div class="content container">
+
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <!-- Left Sidebar End -->
+            <div class="loader">
+                <div id="loading"></div>
+            </div>
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item">
+                                                <a href="/cp/employees">
+                                                    <button type="button" style="margin-bottom: -32px;"
+                                                            class="btn btn-outline-primary back-list">
+                                                        <i class="fa fa-list-ul"></i>
+                                                        Danh sách nhân viên
+                                                    </button>
+                                                </a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">SỬA NHÂN VIÊN</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <!-- START PAGE CONTENT -->
+
+                        <div class="row">
+                            <form id="frmUpdateEmployee" class="col-lg-12 card-box">
+                                <div class="col-lg-8 mt-2" style="float: left">
+                                    <div class="row">
+                                        <div class="form-group col-lg-4">
+                                            <label for="nameEmployeeUp" class="col-form-label">Tên nhân viên <span
+                                                    style="color: red">*</span></label>
+                                            <input id="nameEmployeeUp" name="nameEmployeeUp"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập họ tên ...">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="salaryEmployeeUp" class="col-form-label">Mức Lương <span style="color: red">*</span></label>
+                                            <input id="salaryEmployeeUp" name="salaryEmployeeUp"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập mức lương">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="experienceEmployeeUp" class="col-form-label">Kinh nghiệm nhân viên <span
+                                                    style="color: red">*</span></label>
+                                            <input id="experienceEmployeeUp" name="experienceEmployeeUp"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập kinh nghiệm">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="phoneEmployeeUp" class="col-form-label">Số điện thoại <span style="color: red">*</span></label>
+                                            <input id="phoneEmployeeUp" name="phoneEmployeeUp"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập số điện thoại ...">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="dateOfJoiningEmployeeUp" class="col-form-label">Ngày vào làm <span
+                                                    style="color: red">*</span></label>
+                                            <input class="form-control" type="date" name="dateOfJoiningEmployeeUp" id="dateOfJoiningEmployeeUp">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-3">
+                                            <label for="provinceIdUp" class="col-form-label">Tỉnh/Thành Phố</label>
+                                            <select id="provinceIdUp" name="provinceIdUp"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label for="districtIdUp" class="col-form-label">Quận/Huyện</label>
+                                            <select id="districtIdUp" name="districtIdUp"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label for="wardIdUp" class="col-form-label">Phường/Xã</label>
+                                            <select id="wardIdUp" name="wardIdUp"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label for="addressUp" class="col-form-label">Địa chỉ</label>
+                                            <input id="addressUp" name="addressUp"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Nhập địa chỉ">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="departmentIdEmployeeUp" class="col-form-label">Phòng
+                                            </label>
+                                            <select id="departmentIdEmployeeUp" name="departmentIdEmployeeUp"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="roleIdEmployeeUp" class="col-form-label">Chức vụ
+                                            </label>
+                                            <select id="roleIdEmployeeUp" name="roleIdEmployeeUp"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 mt-3" style="float: left">
+                                    <div class="card" id="cardId" style="margin: 0 auto; height: 200px;left: 77px;top: 46px; !important; ">
+                                        <div class="wrappers">
+                                            <div class="image-preview">
+                                                <canvas id="canvasUp"></canvas>
+                                            </div>
+                                            <div class="content" style="opacity: 1;">
+                                                <div class="icon">
+                                                    <i class="mdi mdi-cloud-upload"></i>
+                                                </div>
+                                                <div class="text font-weight-bold">
+                                                    Chưa có tệp nào được chọn!
+                                                </div>
+                                            </div>
+                                            <div class="clear-image-preview">
+                                                <!--                          <i class="fa fa-times"></i>-->
+                                            </div>
+                                            <div class="file-name">
+                                                CHỌN THAY ĐỔI
+                                            </div>
+                                        </div>
+                                        <input type="file" id="imageFileUp" name="imageFile" accept="image/jpeg, image/png"
+                                               style="height: 0; opacity: 0;"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <button type="button" id="btnUpdate" class="btn btn-primary">CẬP NHẬT THÔNG TIN</button>
+                            </div>
+                        </div>
+                        <!-- END PAGE CONTENT -->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="/assets/js/jQuery.3.6.1.js"></script>
+<script  src="/assets/iziToast/dist/js/iziToast.min.js"></script>
+<script  src="/assets/js/jquery.validate-1.19.5.min.js"></script>
+<script  src="/AppUtils.js"></script>
 
 <script>
     const page = {
@@ -14,8 +225,8 @@
             getAllProvinces: AppUtils.PROVINCE_URL,
             getAllDistrictsByProvinceId: AppUtils.PROVINCE_URL + "district/",
             getAllWardsByDistrictId: AppUtils.PROVINCE_URL + "ward/",
-            getAllEmployee: AppUtils.GETALLEMPLOYEE_URL,
-            updateEmployee : AppUtils.EMPLOYEE_URL,
+            getEmployeeById: AppUtils.GETALLEMPLOYEE_URL,
+            updateEmployee : AppUtils.EMPLOYEE_URL + "/",
 
         },
         elements: {},
@@ -26,24 +237,24 @@
     }
 
     page.elements.frmUpdateEmployee = $("#frmUpdateEmployee");
-    page.elements.nameEmployeeUp = $("#nameEmployee");
-    page.elements.salaryEmployeeUp = $("#salaryEmployee");
-    page.elements.experienceEmployeeUp = $("#experienceEmployee");
-    page.elements.dateOfJoiningEmployeeUp = $("#dateOfJoiningEmployee");
-    page.elements.phoneEmployeeUp = $("#phoneEmployee");
-    page.elements.roleIdEmployeeUp = $("#roleIdEmployee");
+    page.elements.nameEmployeeUp = $("#nameEmployeeUp");
+    page.elements.salaryEmployeeUp = $("#salaryEmployeeUp");
+    page.elements.experienceEmployeeUp = $("#experienceEmployeeUp");
+    page.elements.dateOfJoiningEmployeeUp = $("#dateOfJoiningEmployeeUp");
+    page.elements.phoneEmployeeUp = $("#phoneEmployeeUp");
+    page.elements.roleIdEmployeeUp = $("#roleIdEmployeeUp");
     page.elements.departmentIdEmployeeUp = $("#departmentIdEmployeeUp");
-    page.elements.provinceIdUp = $("#provinceId");
-    page.elements.districtIdUp = $("#districtId");
-    page.elements.wardIdUp = $("#wardId");
-    page.elements.addressUp = $("#address");
+    page.elements.provinceIdUp = $("#provinceIdUp");
+    page.elements.districtIdUp = $("#districtIdUp");
+    page.elements.wardIdUp = $("#wardIdUp");
+    page.elements.addressUp = $("#addressUp");
     page.elements.btnUpdate = $ ("#btnUpdate");
 
-    page.elements.imageFileUp = $("#imageFile");
-    page.elements.canvasUp = $("#canvas");
-    page.elements.wrapperUp= $("#frmUpdateEmployee section .wrappers");
-    page.elements.wrapperContentUp = $("#frmUpdateEmployee section .wrappers .content");
-    page.elements.imagePreviewUp = $("#frmUpdateEmployee section .image-preview canvas");
+    page.elements.imageFileUp = $("#imageFileUp");
+    page.elements.canvasUp = $("#canvasUp");
+    page.elements.wrapperUp= $("#frmUpdateEmployee .wrappers");
+    page.elements.wrapperContentUp = $("#frmUpdateEmployee  .wrappers .content");
+    page.elements.imagePreviewUp = $("#frmUpdateEmployee .image-preview canvas");
     page.elements.imagePreviewUp.css("display", "none");
     page.elements.contextUp = page.elements.canvasUp[0].getContext('2d');
     // page.dialogs.elements.context = null;
@@ -59,17 +270,41 @@
 
     let employeeAvatar = new EmployeeAvatar();
     let employee = new Employee();
+    let locationRegion = new LocationRegion();
+    let department = new Department();
+    let role = new Role();
 
-    page.elements.getAllEmployeeById = (employeeId) => {
+
+    page.elements.getEmployeeById = (employeeId) => {
         return $.ajax({
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
             type: "GET",
-            url: page.urls.getAllEmployee + employeeId
+            url: page.urls.getEmployeeById + "/"+ employeeId
         }).done((data) => {
             employee = data;
+            locationRegion = employee.locationRegion ;
+            page.elements.addressUp.val(locationRegion.address);
+            page.elements.nameEmployeeUp.val(employee.name);
+            page.elements.salaryEmployeeUp.val(employee.salary);
+            page.elements.experienceEmployeeUp.val(employee.experience);
+            page.elements.phoneEmployeeUp.val(employee.phone);
+            page.elements.dateOfJoiningEmployeeUp.val(employee.dateOfJoining)
+            employeeAvatar = employee.emloyeeAvatar;
+            let avatarFileFolder = employeeAvatar.fileFolder;
+
+            let avatarFileName = employeeAvatar.fileName
+            let avatarUrl = AppUtils.BASE_URL_CLOUD_IMAGE
+                + "/" + AppUtils.BASE_SCALE_IMAGE_MOVIE_350_350_100
+                + "/" + avatarFileFolder
+                + "/" + avatarFileName;
+
+            console.log(avatarUrl)
+            page.commands.loadImageToCanvasUp(null, "", avatarUrl);
+
+
         }).fail((jqXHR) => {
             let errors = jqXHR.response;
             if (errors) {
@@ -92,8 +327,8 @@
             salaryEmployeeUp: {
                 required: true,
                 number: true,
-                minlength: 1000,
-                maxlength: 100000
+                // minlength: 1000,
+                // maxlength: 100000
             },
             experienceEmployeeUp: {
                 required: true,
@@ -112,8 +347,8 @@
             salaryEmployeeUp: {
                 required: "Vui lòng nhập lương của nhân viên",
                 number: "Lương phải là  định dạng số ",
-                minlength: "Số lương tối thiểu là 1000 $",
-                maxlength: "Số lương tối đa là 100000 $"
+                // minlength: "Số lương tối thiểu là 1000 $",
+                // maxlength: "Số lương tối đa là 100000 $"
             },
             experienceEmployeeUp: {
                 required: "Vui lòng nhập kinh nghiệm nhân viên.",
@@ -133,23 +368,23 @@
             if (this.errorList.length > 0) {
                 page.elements.footerAccordion.removeClass("hide").addClass("show");
                 page.elements.accordionCollapse.prop("checked", true);
-                page.elements.btnCreate.addClass("hide");
+                page.elements.btnUpdate.addClass("hide");
             } else {
                 page.elements.footerAccordion.removeClass("show").addClass("hide");
                 page.elements.footerContent.empty();
                 page.elements.accordionCollapse.prop("checked", false);
-                page.elements.btnCreate.removeClass("hide");
+                page.elements.btnUpdate.removeClass("hide");
 
                 $("#frmUpdateEmployee input.error").removeClass("error");
             }
             this.defaultShowErrors();
         },
         submitHandler: function () {
+
             page.commands.updateEmployee();
         }
     })
     page.commands.updateEmployee = () =>{
-
         locationRegion.provinceId = page.elements.provinceIdUp.val();
         locationRegion.provinceName = page.elements.provinceIdUp.find("option:selected").text();
         locationRegion.districtId = page.elements.districtIdUp.val();
@@ -159,12 +394,12 @@
         locationRegion.address = page.elements.addressUp.val();
 
         department.id = page.elements.departmentIdEmployeeUp.val();
-        department.name = page.elements.departmentIdEmployeeUp.find("option:selected").text();
+        // department.name = page.elements.departmentIdEmployeeUp.find("option:selected").text();
         role.id = page.elements.roleIdEmployeeUp.val();
-        role.code = page.elements.roleIdEmployeeUp.find("option:selected").text();
-        employee.department = department;
-        employee.role = role;
-        employee.locationRegion = locationRegion;
+        // role.code = page.elements.roleIdEmployeeUp.find("option:selected").text();
+        // employee.department = department;
+        // employee.role = role;
+        // employee.locationRegion = locationRegion;
 
         employee.name = page.elements.nameEmployeeUp.val();
         employee.salary = page.elements.salaryEmployeeUp.val();
@@ -179,6 +414,8 @@
         formData.append("experience", employee.experience);
         formData.append("dateOfJoining", employee.experience);
         formData.append("phone", employee.phone)
+        formData.append("locationRegionId", locationRegion.id);
+        console.log(locationRegion.id)
         formData.append("provinceId", locationRegion.provinceId);
         formData.append("provinceName", locationRegion.provinceName);
         formData.append("districtId", locationRegion.districtId);
@@ -196,7 +433,7 @@
             contentType: false,
             cache: false,
             processData: false,
-            url: page.urls.updateEmployee + [[${staffId}]],
+            url: page.urls.updateEmployee + [[${employeeId}]],
             data: formData,
         }).done((data) => {
             employee = data;
@@ -218,7 +455,7 @@
                 page.elements.footerAccordion.removeClass("hide").addClass("show");
                 page.elements.accordionCollapse.prop("checked", true);
                 page.elements.footerContent.css({display: ""});
-                page.elements.btnCreate.addClass("hide");
+                page.elements.btnUpdate.addClass("hide");
                 page.elements.footerContent.html(str);
             } else {
                 AppUtils.SweetAlert.showError500Vi();
@@ -237,12 +474,12 @@
             type :"GET",
             url: page.urls.getAllRole
         }).done((data) => {
-            let results = data.results;
-            page.elements.roleIdEmployee.append('<option disabled selected hidden>Chọn role</option>');
+            let results = data;
             results.map(item => {
                 let str = `<option value="${item.id}">${item.code}</option>`;
-                page.elements.roleIdEmployee.append(str)
+                page.elements.roleIdEmployeeUp.append(str)
             })
+            page.elements.roleIdEmployeeUp.val(employee.role.id)
         }).fail((error) => {
             AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_ROLE);
         })
@@ -256,12 +493,13 @@
             type : "GET",
             url: page.urls.getAllDepartment,
         }).done((data) => {
-            let results = data.results;
-            page.elements.departmentIdEmployee.append('<option disabled selected hidden>Chọn phòng ban</option>');
+            let results = data;
+            // page.elements.departmentIdEmployeeUp.append('<option disabled selected hidden>Chọn phòng ban</option>');
             results.map(item => {
                 let str = `<option value="${item.id}">${item.name}</option>`;
-                page.elements.departmentIdEmployee.append(str)
+                page.elements.departmentIdEmployeeUp.append(str)
             })
+            page.elements.departmentIdEmployeeUp.val(employee.department.id);
         }).fail ((error) => {
             AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_DEPARTMENT);
         })
@@ -274,7 +512,7 @@
                 "content-type": "application/json"
             },
             type: "GET",
-            url: page.urls.getAllEmployee
+            url: page.urls.getEmployeeById
         }).done((data) => {
             $.each(data, (i, item) => {
                 employee = item;
@@ -300,10 +538,10 @@
                 let results = data.results;
                 page.elements.provinceIdUp.append('<option disabled selected hidden>Chọn Tỉnh/Thành Phố</option>');
                 results.map(item => {
-                    let str = `<option value="${item.provinceId}">${item.provinceName}</option>`;
+                    let str = `<option value="${item.province_id}">${item.province_name}</option>`;
                     page.elements.provinceIdUp.append(str);
                 })
-
+                page.elements.provinceIdUp.val(employee.locationRegion.provinceId)
             })
             .fail((error) => {
                 AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_PROVINCE);
@@ -327,9 +565,10 @@
                 let results = data.results;
 
                 results.map(item => {
-                    let str = `<option value="${item.districtId}">${item.districtName}</option>`;
+                    let str = `<option value="${item.district_id}">${item.district_name}</option>`;
                     page.elements.districtIdUp.append(str);
                 })
+                page.elements.districtIdUp.val(employee.locationRegion.districtId)
             })
             .fail((error) => {
                 AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_DISTRICT);
@@ -352,16 +591,17 @@
                 let results = data.results;
 
                 results.map(item => {
-                    let str = `<option value="${item.wardId}">${item.wardName}</option>`;
+                    let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
                     page.elements.wardIdUp.append(str);
                 })
+                page.elements.wardIdUp.val(employee.locationRegion.wardId);
             })
             .fail((error) => {
                 AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_WARD);
             })
     }
 
-    page.commands.loadImageToCanvasUp = (imageFile) => {
+    page.commands.loadImageToCanvasUp = (imageFile, fileType, imageUrl) => {
         page.elements.imagePreviewUp.css("display", "");
         page.elements.wrapperUp.addClass("active");
         page.elements.wrapperContentUp.css("opacity", 0);
@@ -369,34 +609,29 @@
         let imageObj = new Image();
 
         imageObj.onload = function () {
-            page.elements.context.canvasUp.width = imageObj.width;
-            page.elements.context.canvasUp.height = imageObj.height;
-            page.elements.context.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
+            page.elements.contextUp.width = imageObj.width;
+            page.elements.contextUp.canvas.height = imageObj.height;
+            page.elements.contextUp.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
         };
-
-        imageObj.src = URL.createObjectURL(imageFile);
+        if (fileType === "BINARY") {
+            imageObj.src = URL.createObjectURL(imageFile);
+        } else {
+            imageObj.src = imageUrl;
+        }
     }
 
     page.commands.changeImagePreviewUp = () => {
         let imageFile = page.elements.imageFileUp[0].files[0];
-
         if (imageFile) {
             let reader = new FileReader();
-
             reader.readAsDataURL(imageFile);
-
             reader.onload = function (e) {
                 if (e.target.readyState === FileReader.DONE) {
-                    page.commands.loadImageToCanvasUp(imageFile);
+                    page.commands.loadImageToCanvasUp(imageFile, "BINARY", null);
                 }
             }
-
-            $("#imageFile-error").remove();
-
-            page.commands.checkValidate();
-        }
-        else {
-            page.elements.clearImagePreview();
+        } else {
+            page.dialogs.elements.clearImagePreviewUp();
         }
     }
 
@@ -419,17 +654,18 @@
 
     page.commands.loadData = () => {
 
-        let employeeId = [[${employeeId}]];
-        page.loadData.getAllEmployeeById(employeeId);
 
-        page.commands.getAllEmployee();
+        let employeeId = [[${employeeId}]];
+        page.elements.getEmployeeById(employeeId);
+
+        // page.commands.getAllEmployee();
         page.commands.getAllRole();
         page.commands.getAllDepartment();
-        page.commands.getAllProvinces();
+
         page.commands.getAllProvinces().then(() => {
             let provinceId = page.elements.provinceIdUp.val();
             page.commands.getAllDistrictsByProvinceId(provinceId).then(() => {
-                let districtId = page.elements.provinceIdUp.val();
+                let districtId = page.elements.districtIdUp.val();
                 page.commands.getAllWardsByDistrictId(districtId);
             });
         });
@@ -458,6 +694,18 @@
     }
 
     page.initializeEventControl = () => {
+        page.elements.provinceIdUp.on("change", function () {
+            let provinceIdUp = $(this).val();
+            page.commands.getAllDistrictsByProvinceId(provinceIdUp).then(() => {
+                let districtIdUp = page.elements.districtIdUp.val();
+                page.commands.getAllWardsByDistrictId(districtIdUp);
+            })
+        })
+
+        page.elements.districtIdUp.on("change", function () {
+            let districtIdUp = $(this).val();
+            page.commands.getAllWardsByDistrictId(districtIdUp);
+        });
 
         page.elements.divImagePreviewUp.on("click", function () {
             page.elements.imageFileUp.trigger("click");

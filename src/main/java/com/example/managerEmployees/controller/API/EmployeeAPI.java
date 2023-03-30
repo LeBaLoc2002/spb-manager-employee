@@ -122,6 +122,12 @@ public class EmployeeAPI {
         if (!emloyeeOptional.isPresent()) {
             throw new DataInputException("Id của bạn không hợp lệ, xin vui lòng hãy thử lại!");
         }
+        Long locationRegionId = employeeUpdateDTO.getLocationRegionId();
+        Optional<LocationRegion>  locationRegionOptional = locationRegionService.findById(locationRegionId);
+        if (!locationRegionOptional.isPresent()){
+            throw new DataInputException("ID khu vực vị trí không hợp lệ.");
+        }
+
 
         Long roleId ;
         try {

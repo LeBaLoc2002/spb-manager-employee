@@ -5,6 +5,7 @@ import com.example.managerEmployees.model.Employee;
 import com.example.managerEmployees.service.Employee.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/update/{employeeId}")
-    public String showUpdatePage(@PathVariable Long employeeId) {
+    public String showUpdatePage(@PathVariable Long employeeId , Model model) {
 
         Optional<Employee> employee = employeeService.findById(employeeId);
 
@@ -51,7 +52,7 @@ public class EmployeeController {
             throw new DataInputException("ID nhân viên không hợp lệ");
         }
 
-//        model.addAttribute("employeeId", employeeId);
+        model.addAttribute("employeeId", employeeId);
 
 //        employeeService.getInfo(model);
 

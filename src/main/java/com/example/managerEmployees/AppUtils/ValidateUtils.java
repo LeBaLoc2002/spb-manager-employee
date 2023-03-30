@@ -14,6 +14,8 @@ public class ValidateUtils {
     public static final String DATE_REGEX_YYYY_MM_DD = "[0-9]{4}-([0-9]|0[0-9]|1[0-2])-([0-9]|[0-2][0-9]|3[0-1])$";
     public static final String DATE_REGEX_DD_MM_YYYY = "([0-9]|[0-2][0-9]|3[0-1])-([0-9]|0[0-9]|1[0-2])-[0-9]{4}$";
 
+    public static final String DATE_REGEX_MM_DD_YYYY = "([0-9]|0[0-9]|1[0-2])-([0-9]|[0-2][0-9]|3[0-1])-[0-9]{4}$";
+
     public boolean isNumberValid(String number) {
         return Pattern.compile(NUMBER_REGEX).matcher(number).matches();
     }

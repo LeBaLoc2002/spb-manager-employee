@@ -237,6 +237,7 @@ public class EmployeeImpl implements IEmployeeService {
     @Override
     public EmployeeDTO getInfo(Model model) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
+//        Optional<EmployeeDTO> employeeDTOOptional = .findById(EmployeeId);
         String name = employeeDTO.getName();
         BigDecimal salary = employeeDTO.getSalary();
         String experience = employeeDTO.getExperience();

@@ -121,7 +121,7 @@ public class EmployeeUpdateDTO implements Validator {
 
         String dateOfJoining = employeeUpdateDTO.getDateOfJoining();
         if (dateOfJoining != null || dateOfJoining.length()> 0) {
-            if (!dateOfJoining.matches(ValidateUtils.DATE_REGEX_YYYY_MM_DD)){
+            if (!dateOfJoining.matches(ValidateUtils.DATE_REGEX_MM_DD_YYYY)){
                 errors.rejectValue("dateOfJoining", "dateOfJoining.number", "Ngày tham gia phải là ngày tháng năm sinh ,vui lòng nhập lại.");
                 return;
             }
