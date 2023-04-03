@@ -1,17 +1,15 @@
-package com.example.managerEmployees.service.Employee;
+package com.example.managerEmployees.service.employee;
 
-import com.example.managerEmployees.AppUtils.UploadUtil;
+import com.example.managerEmployees.appUtils.UploadUtil;
 import com.example.managerEmployees.exception.DataInputException;
 import com.example.managerEmployees.model.*;
-import com.example.managerEmployees.model.dto.department.DepartmentDTO;
 import com.example.managerEmployees.model.dto.employee.EmployeeCreateDTO;
 import com.example.managerEmployees.model.dto.employee.*;
 import com.example.managerEmployees.model.dto.employee.EmployeeFillterDTO;
 import com.example.managerEmployees.model.Enum.FileType;
-import com.example.managerEmployees.model.dto.role.RoleDTO;
 import com.example.managerEmployees.repository.*;
-import com.example.managerEmployees.service.ImageEmployee.IEmployeeAvatarService;
-import com.example.managerEmployees.service.LocationRegion.ILocationRegionService;
+import com.example.managerEmployees.service.imageEmployee.IEmployeeAvatarService;
+import com.example.managerEmployees.service.locationRegion.ILocationRegionService;
 import com.example.managerEmployees.upload.IUploadService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,11 +133,11 @@ public class EmployeeImpl implements IEmployeeService {
         LocationRegion locationRegion = employee.getLocationRegion();
         locationRegionRepository.save(locationRegion);
 
-        EmployeeAvatar oldEmloyeeAvatar = employee.getEmployeeAvatar();
-        uploadService.destroyImage(oldEmloyeeAvatar.getCloudId(), uploadImage.buildImageDestroyParams(employee, oldEmloyeeAvatar.getCloudId()));
-        EmployeeAvatar newEmloyeeAvatar = uploadAndSaveEmloyeeAvatar(file,oldEmloyeeAvatar);
+        EmployeeAvatar oldEmployeeAvatar = employee.getEmployeeAvatar();
+        uploadService.destroyImage(oldEmployeeAvatar.getCloudId(), uploadImage.buildImageDestroyParams(employee, oldEmployeeAvatar.getCloudId()));
+        EmployeeAvatar newEmployeeAvatar = uploadAndSaveEmloyeeAvatar(file,oldEmployeeAvatar);
 
-        employee.setEmployeeAvatar(newEmloyeeAvatar);
+        employee.setEmployeeAvatar(newEmployeeAvatar);
 
         employee = emloyeeRepository.save(employee);
         return employee;
@@ -153,8 +151,8 @@ public class EmployeeImpl implements IEmployeeService {
         departmentRepository.save(department);
         LocationRegion locationRegion = employee.getLocationRegion();
         locationRegionRepository.save(locationRegion);
-        EmployeeAvatar emloyeeAvatar = employee.getEmployeeAvatar();
-        imageEmloyeeRepository.save(emloyeeAvatar);
+        EmployeeAvatar employeeAvatar = employee.getEmployeeAvatar();
+        imageEmloyeeRepository.save(employeeAvatar);
         employee = emloyeeRepository.save(employee);
         return employee;
     }
@@ -180,11 +178,11 @@ public class EmployeeImpl implements IEmployeeService {
         assert fileType != null ;
         fileType = fileType.substring(0,5);
 
-        EmployeeAvatar emloyeeAvatar = new EmployeeAvatar();
-        emloyeeAvatar.setFileType(fileType);
-        emloyeeAvatar = imageEmloyeeRepository.save(emloyeeAvatar);
+        EmployeeAvatar employeeAvatar = new EmployeeAvatar();
+        employeeAvatar.setFileType(fileType);
+        employeeAvatar = imageEmloyeeRepository.save(employeeAvatar);
         if (fileType.equals(FileType.IMAGE.getValue())) {
-            emloyeeAvatar = uploadAndSaveEmloyeeAvatar(file,emloyeeAvatar);
+            employeeAvatar = uploadAndSaveEmloyeeAvatar(file,employeeAvatar);
         }
         department = new Department();
         department.setId(employeeCreateDTO.getDepartmentId());
@@ -202,7 +200,7 @@ public class EmployeeImpl implements IEmployeeService {
                 .setExperience(experience)
                 .setDateOfJoining(dateOfJoining)
                 .setPhone(phone)
-                .setEmployeeAvatar(emloyeeAvatar)
+                .setEmployeeAvatar(employeeAvatar)
                 .setLocationRegion(locationRegion)
                 .setDepartment(department)
                 .setRole(role);
@@ -253,7 +251,7 @@ public class EmployeeImpl implements IEmployeeService {
         String phone = employeeDTO.getPhone();
         String roleId = String.valueOf(employeeDTO.getRole().getId());
         String locationRegionId = String.valueOf(employeeDTO.getLocationRegion().getId());
-        String emloyeeAvatarId = employeeDTO.getEmloyeeAvatar().getId();
+        String emloyeeAvatarId = employeeDTO.getEmployeeAvatar().getId();
         String departmentId = String.valueOf(employeeDTO.getDepartment().getId());
 
 

@@ -1,4 +1,4 @@
-package com.example.managerEmployees.AppUtils;
+package com.example.managerEmployees.appUtils;
 
 import org.springframework.stereotype.Component;
 import java.util.regex.Pattern;

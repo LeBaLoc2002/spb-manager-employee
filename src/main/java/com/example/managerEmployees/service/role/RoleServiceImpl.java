@@ -1,4 +1,4 @@
-package com.example.managerEmployees.service.Role;
+package com.example.managerEmployees.service.role;
 
 import com.example.managerEmployees.model.dto.role.RoleDTO;
 import com.example.managerEmployees.model.Role;

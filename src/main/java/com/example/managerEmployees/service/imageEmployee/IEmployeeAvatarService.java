@@ -1,4 +1,4 @@
-package com.example.managerEmployees.service.ImageEmployee;
+package com.example.managerEmployees.service.imageEmployee;
 
 import com.example.managerEmployees.model.EmployeeAvatar;
 import com.example.managerEmployees.service.IGeneralService;

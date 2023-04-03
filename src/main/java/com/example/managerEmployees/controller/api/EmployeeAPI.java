@@ -1,6 +1,6 @@
-package com.example.managerEmployees.controller.API;
+package com.example.managerEmployees.controller.api;
 
-import com.example.managerEmployees.AppUtils.AppUtils;
+import com.example.managerEmployees.appUtils.AppUtils;
 import com.example.managerEmployees.exception.DataInputException;
 import com.example.managerEmployees.model.Enum.FileType;
 import com.example.managerEmployees.model.dto.employee.EmployeeCreateDTO;
@@ -11,10 +11,10 @@ import com.example.managerEmployees.model.Department;
 import com.example.managerEmployees.model.Employee;
 import com.example.managerEmployees.model.LocationRegion;
 import com.example.managerEmployees.model.Role;
-import com.example.managerEmployees.service.Department.IDepartmentService;
-import com.example.managerEmployees.service.Employee.IEmployeeService;
-import com.example.managerEmployees.service.LocationRegion.ILocationRegionService;
-import com.example.managerEmployees.service.Role.IRoleService;
+import com.example.managerEmployees.service.department.IDepartmentService;
+import com.example.managerEmployees.service.employee.IEmployeeService;
+import com.example.managerEmployees.service.locationRegion.ILocationRegionService;
+import com.example.managerEmployees.service.role.IRoleService;
 import io.jsonwebtoken.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -25,7 +25,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.*;
 
@@ -65,7 +64,7 @@ public class EmployeeAPI {
         return new ResponseEntity<>(employeeDTOList,HttpStatus.OK);
     }
 
-    @PostMapping("/fillter")
+    @PostMapping("/filter")
     public ResponseEntity <?> employeeFilter (@RequestBody EmployeeFillterDTO employeeFillterDTO ,BindingResult bindingResult , @RequestParam(name = "sort" , required = false,defaultValue = "ASC") String sort){
         if (bindingResult.hasFieldErrors()) {
             return appUtils.mapErrorToResponse(bindingResult);
@@ -121,9 +120,9 @@ public class EmployeeAPI {
     @PatchMapping("{employeeId}")
     public ResponseEntity<?> updateEmployee(@PathVariable Long employeeId, MultipartFile file, @Validated EmployeeUpdateDTO employeeUpdateDTO, BindingResult bindingResult) throws ParseException, java.io.IOException {
         new EmployeeUpdateDTO().validate(employeeUpdateDTO,bindingResult);
-        if (bindingResult.hasFieldErrors()) {
-            return appUtils.mapErrorToResponse(bindingResult);
-        }
+//        if (bindingResult.hasFieldErrors()) {
+//            return appUtils.mapErrorToResponse(bindingResult);
+//        }
         if (file != null && !file.isEmpty()) {
             String fileType = file.getContentType();
             assert fileType != null;
@@ -139,7 +138,6 @@ public class EmployeeAPI {
                 throw new DataInputException("Vui lòng chọn tệp tin ảnh đại diện nhỏ hơn 500 KB");
             }
         }
-
 
         Optional<Employee> emloyeeOptional = employeeService.findById(employeeId);
         if (!emloyeeOptional.isPresent()) {
@@ -188,7 +186,7 @@ public class EmployeeAPI {
         role.setId(emloyeeOptional.get().getRole().getId());
         role.setCode(emloyeeOptional.get().getRole().getCode());
         role.setName(emloyeeOptional.get().getRole().getName());
-        Employee employee = employeeUpdateDTO.toEmloyee(locationRegion, department, role);
+        Employee employee = employeeUpdateDTO.toEmployee(locationRegion, department, role);
         employee.setId(employeeId);
         employee.setEmployeeAvatar(emloyeeOptional.get().getEmployeeAvatar());
 //        employee.getLocationRegion()

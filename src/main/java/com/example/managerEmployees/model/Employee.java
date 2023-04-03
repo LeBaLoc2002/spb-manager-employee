@@ -57,7 +57,7 @@ public class Employee extends BaseEntity{
                 .setExperience(experience)
                 .setDateOfJoining(String.valueOf(dateOfJoining))
                 .setPhone(phone)
-                .setEmloyeeAvatar(employeeAvatar.toEmployeeAvatarDTO())
+                .setEmployeeAvatar(employeeAvatar.toEmployeeAvatarDTO())
                 .setDepartment(department.toDepartmentDTO())
                 .setLocationRegion(locationRegion.toLocationRegionDTO())
                 .setRole(role.toRoleDTO());

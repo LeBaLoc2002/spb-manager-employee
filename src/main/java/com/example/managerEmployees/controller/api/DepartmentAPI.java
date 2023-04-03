@@ -1,7 +1,7 @@
-package com.example.managerEmployees.controller.API;
+package com.example.managerEmployees.controller.api;
 
 import com.example.managerEmployees.model.dto.department.DepartmentDTO;
-import com.example.managerEmployees.service.Department.DepartmentServiceImpl;
+import com.example.managerEmployees.service.department.DepartmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

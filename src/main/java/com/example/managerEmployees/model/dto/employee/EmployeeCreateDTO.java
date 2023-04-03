@@ -1,6 +1,6 @@
 package com.example.managerEmployees.model.dto.employee;
 
-import com.example.managerEmployees.AppUtils.ValidateUtils;
+import com.example.managerEmployees.appUtils.ValidateUtils;
 import com.example.managerEmployees.model.Department;
 import com.example.managerEmployees.model.Employee;
 import com.example.managerEmployees.model.Enum.FileType;
@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;

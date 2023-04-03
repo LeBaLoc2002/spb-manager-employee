@@ -1,4 +1,4 @@
-package com.example.managerEmployees.AppUtils;
+package com.example.managerEmployees.appUtils;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

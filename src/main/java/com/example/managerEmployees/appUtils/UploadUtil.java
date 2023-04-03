@@ -1,4 +1,4 @@
-package com.example.managerEmployees.AppUtils;
+package com.example.managerEmployees.appUtils;
 
 import com.cloudinary.utils.ObjectUtils;
 import com.example.managerEmployees.exception.DataInputException;

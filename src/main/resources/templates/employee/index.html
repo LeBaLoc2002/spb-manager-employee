@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/assets/iziToast/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="/assets/css/expand-collapse.css">
 <!--    <link rel="stylesheet" href="/assets/css/loading.css">-->
+<!--    <link href="/assets/css/icons.min.css" rel="stylesheet"  type="text/css">-->
+
 </head>
 <body>
 <div class="container-fluid" style="background-color: #f7f6fd; height: 100vh;">
@@ -145,7 +147,7 @@
     page.elements.tbEmployee = $("#tbEmployee");
     page.elements.tbBdEmployee = $("#tbEmployee tbody");
 
-    let emloyeeAvatar = new EmployeeAvatar();
+    let employeeAvatar = new EmployeeAvatar();
     let employee = new Employee();
     let locationRegion = new LocationRegion();
     let department = new Department();
@@ -321,8 +323,8 @@
     page.commands.renderEmployee = (employee) => {
         let image_thumbnail = AppUtils.BASE_URL_CLOUD_IMAGE + "/"
             + AppUtils.SCALE_IMAGE_W60_H60_Q100 + "/"
-            + employee.emloyeeAvatar.fileFolder + "/"
-            + employee.emloyeeAvatar.fileName;
+            + employee.employeeAvatar.fileFolder + "/"
+            + employee.employeeAvatar.fileName;
 
         return `
             <tr id="tr_${employee.id}" class="text-center">
@@ -330,7 +332,7 @@
                     <input class="deletes" type="checkbox" data-id = "${employee.id}" >
                 </td>
                 <td >
-                    <img class="avatar" src=${image_thumbnail} alt="${emloyeeAvatar.fileName}">
+                    <img class="avatar" src=${image_thumbnail} alt="${employeeAvatar.fileName}">
                 </td>
                 <td >
                     <span>${employee.name}</span>
@@ -359,9 +361,9 @@
                 <td>
                     <a href="/cp/employees/update/${employee.id}">
                         <button data-id="${employee.id}"
-                            data-avatar-id = "${emloyeeAvatar.id}"
-                            data-avatar-file-folder = "${emloyeeAvatar.fileFolder}"
-                            data-avatar-file-name = "${emloyeeAvatar.fileName}"
+                            data-avatar-id = "${employeeAvatar.id}"
+                            data-avatar-file-folder = "${employeeAvatar.fileFolder}"
+                            data-avatar-file-name = "${employeeAvatar.fileName}"
                             class="btn btn-outline-primary update"
                         >
                             <i class="fa fa-pencil" aria-hidden="true"></i>

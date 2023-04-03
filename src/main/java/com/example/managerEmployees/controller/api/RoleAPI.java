@@ -1,7 +1,7 @@
-package com.example.managerEmployees.controller.API;
+package com.example.managerEmployees.controller.api;
 
 import com.example.managerEmployees.model.dto.role.RoleDTO;
-import com.example.managerEmployees.service.Role.RoleServiceImpl;
+import com.example.managerEmployees.service.role.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

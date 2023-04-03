@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/assets/css/preview-image-css.css">
     <link rel="stylesheet" href="/assets/css/expand-collapse.css">
 <!--    <link rel="stylesheet" href="/assets/css/loading.css">-->
+<!--    <link href="/assets/css/icons.min.css" rel="stylesheet">-->
 </head>
 <body>
 <div class="container-fluid" style="background-color: #f7f6fd; height: 100vh;">
@@ -522,8 +523,8 @@
     page.commands.renderEmployee = (employee) => {
         let image_thumbnail = AppUtils.BASE_URL_CLOUD_IMAGE + "/"
             + AppUtils.SCALE_IMAGE_W60_H60_Q100 + "/"
-            + employee.emloyeeAvatar.fileFolder + "/"
-            + employee.emloyeeAvatar.fileName;
+            + employee.employeeAvatar.fileFolder + "/"
+            + employee.employeeAvatar.fileName;
 
         return `
             <tr id="tr_${employee.id}" class="text-center">
@@ -531,7 +532,7 @@
                     <input type="checkbox">
                 </td>
                 <td >
-                    <img class="avatar" src=${image_thumbnail} alt="${employee.emloyeeAvatar.fileName}">
+                    <img class="avatar" src=${image_thumbnail} alt="${employee.employeeAvatar.fileName}">
                 </td>
                 <td >
                     <span>${employee.name}</span>
@@ -559,9 +560,9 @@
                 </td>
                 <td>
                       <button data-id="${employee.id}"
-                        data-avatar-id = "${employee.emloyeeAvatar.id}"
-                        data-avatar-file-folder = "${employee.emloyeeAvatar.fileFolder}"
-                        data-avatar-file-name = "${employee.emloyeeAvatar.fileName}"
+                        data-avatar-id = "${employee.employeeAvatar.id}"
+                        data-avatar-file-folder = "${employee.employeeAvatar.fileFolder}"
+                        data-avatar-file-name = "${employee.employeeAvatar.fileName}"
                         class="btn btn-outline-primary update">
                            <i class="fa fa-pencil" aria-hidden="true"></i>
                       </button>
@@ -656,6 +657,7 @@
             page.commands.closeLoading();
         })
     }
+
     page.commands.getAllEmployee = () => {
         return $.ajax({
             headers: {

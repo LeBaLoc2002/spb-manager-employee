@@ -1,6 +1,6 @@
 package com.example.managerEmployees.model.dto.employee;
 
-import com.example.managerEmployees.AppUtils.ValidateUtils;
+import com.example.managerEmployees.appUtils.ValidateUtils;
 import com.example.managerEmployees.model.Department;
 import com.example.managerEmployees.model.Employee;
 import com.example.managerEmployees.model.LocationRegion;
@@ -78,7 +78,7 @@ public class EmployeeUpdateDTO implements Validator {
                 .setId(departmentId);
     }
 
-    public Employee toEmloyee(LocationRegion locationRegion, Department department, Role role) {
+    public Employee toEmployee(LocationRegion locationRegion, Department department, Role role) {
         return new Employee()
                 .setId(id)
                 .setName(name)

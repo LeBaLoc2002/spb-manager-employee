@@ -1,4 +1,4 @@
-package com.example.managerEmployees.service.Employee;
+package com.example.managerEmployees.service.employee;
 
 import com.example.managerEmployees.model.dto.employee.EmployeeCreateDTO;
 import com.example.managerEmployees.model.dto.employee.EmployeeDTO;

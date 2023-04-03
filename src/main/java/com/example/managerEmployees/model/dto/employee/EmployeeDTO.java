@@ -30,12 +30,12 @@ public class EmployeeDTO {
     private RoleDTO role;
     private LocationRegionDTO locationRegion;
 
-    private EmployeeAvatarDTO emloyeeAvatar;
+    private EmployeeAvatarDTO employeeAvatar;
 
 
     private DepartmentDTO department;
 
-    public EmployeeDTO(Long id, String name, BigDecimal salary, String experience, LocalDate dateOfJoining, String phone, Role role, LocationRegion locationRegion, EmployeeAvatar emloyeeAvatar, Department department) {
+    public EmployeeDTO(Long id, String name, BigDecimal salary, String experience, LocalDate dateOfJoining, String phone, Role role, LocationRegion locationRegion, EmployeeAvatar employeeAvatar, Department department) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -44,7 +44,7 @@ public class EmployeeDTO {
         this.phone = phone;
         this.role = role.toRoleDTO();
         this.locationRegion = locationRegion.toLocationRegionDTO();
-        this.emloyeeAvatar = emloyeeAvatar.toEmployeeAvatarDTO();
+        this.employeeAvatar = employeeAvatar.toEmployeeAvatarDTO();
         this.department = department.toDepartmentDTO();
     }
 }

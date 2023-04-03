@@ -2,7 +2,7 @@ package com.example.managerEmployees.controller.controller;
 
 import com.example.managerEmployees.exception.DataInputException;
 import com.example.managerEmployees.model.Employee;
-import com.example.managerEmployees.service.Employee.IEmployeeService;
+import com.example.managerEmployees.service.employee.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
