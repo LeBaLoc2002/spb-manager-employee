@@ -11,7 +11,7 @@ public class ValidateUtils {
     public static final String LETTER_WITHOUT_NUMBER_REGEX = "([A-Z]+[a-z]*[ ]?)+$";
     public static final String EMAIL_REGEX = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$";
     public static final String PASSWORD_COMPLEX_REGEX = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]+)(?!.*['\"`])(?=^.{6,}$).*$";
-    public static final String DATE_REGEX_YYYY_MM_DD = "[0-9]{4}-([0-9]|0[0-9]|1[0-2])-([0-9]|[0-2][0-9]|3[0-1])$";
+    public static final String DATE_REGEX_YYYY_DD_MM = "^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$";
     public static final String DATE_REGEX_DD_MM_YYYY = "([0-9]|[0-2][0-9]|3[0-1])-([0-9]|0[0-9]|1[0-2])-[0-9]{4}$";
 
     public static final String DATE_REGEX_MM_DD_YYYY = "([0-9]|0[0-9]|1[0-2])-([0-9]|[0-2][0-9]|3[0-1])-[0-9]{4}$";
@@ -33,7 +33,7 @@ public class ValidateUtils {
     }
 
     public boolean isDateValidYMD(String dateStr) {
-        return Pattern.compile(DATE_REGEX_YYYY_MM_DD).matcher(dateStr).matches();
+        return Pattern.compile(DATE_REGEX_YYYY_DD_MM).matcher(dateStr).matches();
     }
 
     public boolean isDateValidDMY(String dateStr) {

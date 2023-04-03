@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
@@ -121,7 +120,7 @@ public class EmployeeUpdateDTO implements Validator {
 
         String dateOfJoining = employeeUpdateDTO.getDateOfJoining();
         if (dateOfJoining != null || dateOfJoining.length()> 0) {
-            if (!dateOfJoining.matches(ValidateUtils.DATE_REGEX_MM_DD_YYYY)){
+            if (!dateOfJoining.matches(ValidateUtils.DATE_REGEX_YYYY_DD_MM)){
                 errors.rejectValue("dateOfJoining", "dateOfJoining.number", "Ngày tham gia phải là ngày tháng năm sinh ,vui lòng nhập lại.");
                 return;
             }

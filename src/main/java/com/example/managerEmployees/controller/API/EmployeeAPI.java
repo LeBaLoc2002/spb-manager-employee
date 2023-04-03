@@ -2,6 +2,7 @@ package com.example.managerEmployees.controller.API;
 
 import com.example.managerEmployees.AppUtils.AppUtils;
 import com.example.managerEmployees.exception.DataInputException;
+import com.example.managerEmployees.model.Enum.FileType;
 import com.example.managerEmployees.model.dto.employee.EmployeeCreateDTO;
 import com.example.managerEmployees.model.dto.employee.EmployeeDTO;
 import com.example.managerEmployees.model.dto.employee.EmployeeFillterDTO;
@@ -96,10 +97,15 @@ public class EmployeeAPI {
         if (bindingResult.hasFieldErrors()) {
             return appUtils.mapErrorToResponse(bindingResult);
         }
+//        if (employeeService.existsEmployeeByNameAndDeletedIsFalse(employeeCreateDTO.getName())){
+//            throw new DataInputException("Tên nhân viên này đã được tồn tại");
+//        }
+
         MultipartFile file = employeeCreateDTO.getFile();
         if (file == null) {
             throw new DataInputException("Ảnh không được để trống");
         }
+
         LocationRegion locationRegion = employeeCreateDTO.toLocationRegion();
         locationRegion.setId(null);
         Role role = employeeCreateDTO.toRole();
@@ -111,23 +117,44 @@ public class EmployeeAPI {
 
         return new ResponseEntity<>(newEmployee.toEmployeeDTO(), HttpStatus.CREATED);
     }
+
     @PatchMapping("{employeeId}")
     public ResponseEntity<?> updateEmployee(@PathVariable Long employeeId, MultipartFile file, @Validated EmployeeUpdateDTO employeeUpdateDTO, BindingResult bindingResult) throws ParseException, java.io.IOException {
         new EmployeeUpdateDTO().validate(employeeUpdateDTO,bindingResult);
         if (bindingResult.hasFieldErrors()) {
             return appUtils.mapErrorToResponse(bindingResult);
         }
+        if (file != null && !file.isEmpty()) {
+            String fileType = file.getContentType();
+            assert fileType != null;
+            fileType = fileType.substring(0, 5);
+
+            if (!fileType.equals(FileType.IMAGE.getValue())) {
+                throw new DataInputException("Vui lòng chọn tệp tin ảnh đại diện phải là JPG hoặc PNG");
+            }
+
+            long fileSize = file.getSize();
+
+            if (fileSize > 512000) {
+                throw new DataInputException("Vui lòng chọn tệp tin ảnh đại diện nhỏ hơn 500 KB");
+            }
+        }
+
 
         Optional<Employee> emloyeeOptional = employeeService.findById(employeeId);
         if (!emloyeeOptional.isPresent()) {
             throw new DataInputException("Id của bạn không hợp lệ, xin vui lòng hãy thử lại!");
         }
+
+//        if (employeeService.existsEmployeeByNameAndIdNotAndDeletedIsFalse(employeeUpdateDTO.getName(), employeeUpdateDTO.getId())) {
+//            throw new DataInputException("Tên nhân viên này đã được sử dụng");
+//        }
+
         Long locationRegionId = employeeUpdateDTO.getLocationRegionId();
         Optional<LocationRegion>  locationRegionOptional = locationRegionService.findById(locationRegionId);
         if (!locationRegionOptional.isPresent()){
             throw new DataInputException("ID khu vực vị trí không hợp lệ.");
         }
-
 
         Long roleId ;
         try {
@@ -151,12 +178,6 @@ public class EmployeeAPI {
         if (!optionalDepartment.isPresent()){
             throw new DataInputException("Phòng nhân sự không tồn tại");
         }
-
-//        employee.setName(employeeUpdateDTO.getName());
-//        employee.setSalary(employeeUpdateDTO.getSalary());
-//        employee.setExperience(employeeUpdateDTO.getExperience());
-//        employee.setDateOfJoining(LocalDate.parse(employeeUpdateDTO.getDateOfJoining()));
-//        employee.setPhone(employeeUpdateDTO.getPhone());
 
         LocationRegion locationRegion = employeeUpdateDTO.toLocationRegion();
         locationRegion.setId(emloyeeOptional.get().getLocationRegion().getId());
@@ -210,6 +231,7 @@ public class EmployeeAPI {
         if (!emloyeeOptional.isPresent()){
             throw new DataInputException("ID nhân viên không hợp lệ");
         }
+
         try {
         employeeService.softDelete(employeeId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);

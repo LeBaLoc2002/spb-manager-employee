@@ -3,6 +3,7 @@ package com.example.managerEmployees.model.dto.employee;
 import com.example.managerEmployees.AppUtils.ValidateUtils;
 import com.example.managerEmployees.model.Department;
 import com.example.managerEmployees.model.Employee;
+import com.example.managerEmployees.model.Enum.FileType;
 import com.example.managerEmployees.model.LocationRegion;
 import com.example.managerEmployees.model.Role;
 import lombok.AllArgsConstructor;
@@ -93,6 +94,27 @@ public class EmployeeCreateDTO  implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
     EmployeeCreateDTO employeeCreateDTO = (EmployeeCreateDTO) o;
+        MultipartFile multipartFile = employeeCreateDTO.getFile();
+        if (multipartFile == null || multipartFile.getSize() == 0) {
+            errors.rejectValue("file", "file.null", "Vui lòng chọn tệp tin làm ảnh đại diện");
+            return;
+        }
+
+        String file = multipartFile.getContentType();
+        assert file != null;
+        file = file.substring(0, 5);
+
+        if (!file.equals(FileType.IMAGE.getValue())) {
+            errors.rejectValue("file", "file.type", "Vui lòng chọn tệp tin ảnh đại diện phải là JPG hoặc PNG");
+            return;
+        }
+
+        long fileSize = multipartFile.getSize();
+
+        if (fileSize > 512000) {
+            errors.rejectValue("file", "file.size", "Vui lòng chọn tệp tin ảnh đại diện nhỏ hơn 500 KB");
+        }
+
         String salary = employeeCreateDTO.getSalary();
         if (salary != null || salary.length() > 0) {
             if (salary.length() > 6) {
@@ -114,7 +136,7 @@ public class EmployeeCreateDTO  implements Validator {
 
         String dateOfJoining = employeeCreateDTO.getDateOfJoining();
         if (dateOfJoining != null || dateOfJoining.length()> 0) {
-            if (!dateOfJoining.matches(ValidateUtils.DATE_REGEX_YYYY_MM_DD)){
+            if (!dateOfJoining.matches(ValidateUtils.DATE_REGEX_YYYY_DD_MM)){
                 errors.rejectValue("dateOfJoining", "dateOfJoining.number", "Ngày tham gia phải là ngày tháng năm sinh ,vui lòng nhập lại.");
                 return;
             }

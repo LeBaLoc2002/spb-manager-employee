@@ -1,0 +1,140 @@
+/*
+ CSS for the main interaction
+*/
+
+.pb-50 {
+    padding-bottom: 50px;
+}
+
+.accordion > input[name="collapse"] {
+    display: none;
+
+    /*position: absolute;
+    left: -100vw;*/
+}
+
+.accordion label,
+.accordion .content {
+    margin: 0 auto;
+}
+
+
+.accordion .content {
+    /*background: #fff;*/
+    overflow: hidden;
+    height: 0;
+    transition: 0.5s;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    padding-left: 30px;
+    /*padding-bottom: 5px;*/
+}
+
+.accordion > input[name="collapse"]:checked ~ .content {
+    height: auto;
+    transition: height 0.5s;
+}
+
+.accordion label {
+    display: block;
+
+}
+
+
+/* For Desktop */
+/*@media only screen and (min-width: 620px){*/
+/*  .accordion > input[name="collapse"]:checked ~ .content {*/
+/*    height: 220px;*/
+/*  }*/
+/*}*/
+
+.accordion {
+    width: 100vw;
+    /* margin-bottom: 1em; */
+    /*position: fixed;*/
+    bottom: 0;
+    z-index: 10;
+}
+
+.footerError {
+
+}
+
+.accordion > input[name="collapse"]:checked ~ .content {
+    border-top: 0;
+    transition: 0.3s;
+    padding-bottom: 5px;
+}
+
+.accordion .handle {
+    margin: 0;
+    font-size: 16px;
+}
+
+.accordion .handle label {
+    color: #fff;
+    cursor: pointer;
+    font-weight: normal;
+    padding: 10px;
+    background: #b0100c;
+    user-select: none;
+}
+
+.accordion .handle label:hover,
+.accordion label:focus {
+    background: #843533;
+}
+
+.accordion .handle label:before {
+    font: normal normal normal 24px/1 "Material Design Icons";
+    content: "\F140";
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 1em;
+    line-height: 1.556em;
+    vertical-align: middle;
+    transition: 0.4s;
+}
+
+.accordion > input[name="collapse"]:checked ~ .handle label:before {
+    transform: rotate(180deg);
+    transform-origin: center;
+    transition: 0.4s;
+}
+
+
+
+.accordion .content label {
+    margin: 10px 0 !important;
+    font-size: 16px;
+    font-weight: 400;
+    display: list-item;
+}
+
+
+/*
+ Demo purposes only
+*/
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+
+p {
+    margin: 0 0 1em;
+    padding: 10px;
+}
+
+h1 {
+    margin: 0 0 1.5em;
+    font-weight: 600;
+    font-size: 1.5em;
+}
+
+.accordion p:last-child {
+    margin-bottom: 0;
+}

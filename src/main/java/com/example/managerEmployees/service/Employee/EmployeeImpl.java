@@ -95,6 +95,16 @@ public class EmployeeImpl implements IEmployeeService {
     }
 
     @Override
+    public Boolean existsEmployeeByNameAndDeletedIsFalse(String name) {
+        return emloyeeRepository.existsEmployeeByNameAndDeletedIsFalse(name);
+    }
+
+    @Override
+    public Boolean existsEmployeeByNameAndIdNotAndDeletedIsFalse(String name, Long id) {
+        return emloyeeRepository.existsEmployeeByNameAndIdNotAndDeletedIsFalse(name,id);
+    }
+
+    @Override
     public Page<Employee> findAll(Pageable pageable) {
         return emloyeeRepository.findAll(pageable);
     }
@@ -117,8 +127,6 @@ public class EmployeeImpl implements IEmployeeService {
     @Override
     public Employee updateWithAvatar(Employee employee, MultipartFile file) throws IOException {
 
-//        EmloyeeAvatar emloyeeAvatar = emloyee.getEmloyeeAvatar();
-//        imageEmloyeeRepository.save(emloyeeAvatar);
 
         Role role = employee.getRole();
         roleRepository.save(role);

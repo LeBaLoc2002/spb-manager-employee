@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/iziToast/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/assets/css/expand-collapse.css">
+<!--    <link rel="stylesheet" href="/assets/css/loading.css">-->
 </head>
 <body>
 <div class="container-fluid" style="background-color: #f7f6fd; height: 100vh;">
@@ -91,6 +93,7 @@
             </tbody>
         </table>
     </div>
+    <th:block th:replace="/layout/footer :: footer"></th:block>
 
 </div>
 <script src="/assets/js/jQuery.3.6.1.js"></script>
@@ -131,16 +134,6 @@
     page.elements.address = $("#address");
     page.elements.btnCreate = $("#btnCreate");
 
-    page.elements.imageFile = $("#imageFile");
-    page.elements.canvas = $("#canvas");
-    page.elements.wrapper = $("#frmCreateEmployee section .wrappers");
-    page.elements.wrapperContent = $("#frmCreateEmployee section .wrappers .content");
-    page.elements.imagePreview = $("#frmCreateEmployee section .image-preview canvas");
-    page.elements.imagePreview.css("display", "none");
-    // page.elements.context = page.elements.canvas[0].getContext('2d');
-    // page.dialogs.elements.context = null;
-    page.elements.divImagePreview = $("#frmCreateEmployee div.image-preview, #frmCreateEmployee div.file-name");
-    page.elements.btnClearImagePreview = $(".clear-image-preview i");
 
     page.alertDanger.frmCreateEmployee = $("#frmCreateEmployee .frm-alert-danger");
 
@@ -217,7 +210,6 @@
             type: "GET",
             url: page.urls.getAllEmployee
         }).done((data) => {
-            console.log(data)
             $.each(data, (i, item) => {
                 employee = item;
                 page.elements.tbBdEmployee.prepend(page.commands.renderEmployee(employee));
@@ -335,7 +327,7 @@
         return `
             <tr id="tr_${employee.id}" class="text-center">
                 <td>
-                    <input type="checkbox">
+                    <input class="deletes" type="checkbox" data-id = "${employee.id}" >
                 </td>
                 <td >
                     <img class="avatar" src=${image_thumbnail} alt="${emloyeeAvatar.fileName}">
@@ -398,7 +390,6 @@
             url: page.urls.getAllRole
         }).done((data) => {
             let results = data;
-            console.log(results)
             page.elements.roleIdEmployee.append('<option disabled selected hidden>Chọn role</option>');
             results.map(item => {
                 let str = `<option value="${item.id}">${item.code}</option>`;
@@ -429,50 +420,50 @@
         })
     }
 
-    page.commands.loadImageToCanvas = (imageFile) => {
-        page.elements.imagePreview.css("display", "");
-        page.elements.wrapper.addClass("active");
-        page.elements.wrapperContent.css("opacity", 0);
-
-        let imageObj = new Image();
-
-        imageObj.onload = function () {
-            page.elements.context.canvas.width = imageObj.width;
-            page.elements.context.canvas.height = imageObj.height;
-            page.elements.context.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
-        };
-
-        imageObj.src = URL.createObjectURL(imageFile);
-    }
-
-    page.commands.changeImagePreview = () => {
-        let imageFile = page.elements.imageFile[0].files[0];
-
-        if (imageFile) {
-            let reader = new FileReader();
-
-            reader.readAsDataURL(imageFile);
-
-            reader.onload = function (e) {
-                if (e.target.readyState === FileReader.DONE) {
-                    page.commands.loadImageToCanvas(imageFile);
-                }
-            }
-
-            $("#imageFile-error").remove();
-
-            page.commands.checkValidate();
-        } else {
-            page.elements.clearImagePreview();
-        }
-    }
-
-    page.elements.clearImagePreview = () => {
-        page.elements.imageFile.val("");
-        page.elements.imagePreview.css("display", "none");
-        page.elements.wrapper.removeClass("active");
-        page.elements.wrapperContent.css("opacity", 1);
-    }
+    // page.commands.loadImageToCanvas = (imageFile) => {
+    //     page.elements.imagePreview.css("display", "");
+    //     page.elements.wrapper.addClass("active");
+    //     page.elements.wrapperContent.css("opacity", 0);
+    //
+    //     let imageObj = new Image();
+    //
+    //     imageObj.onload = function () {
+    //         page.elements.context.canvas.width = imageObj.width;
+    //         page.elements.context.canvas.height = imageObj.height;
+    //         page.elements.context.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
+    //     };
+    //
+    //     imageObj.src = URL.createObjectURL(imageFile);
+    // }
+    //
+    // page.commands.changeImagePreview = () => {
+    //     let imageFile = page.elements.imageFile[0].files[0];
+    //
+    //     if (imageFile) {
+    //         let reader = new FileReader();
+    //
+    //         reader.readAsDataURL(imageFile);
+    //
+    //         reader.onload = function (e) {
+    //             if (e.target.readyState === FileReader.DONE) {
+    //                 page.commands.loadImageToCanvas(imageFile);
+    //             }
+    //         }
+    //
+    //         $("#imageFile-error").remove();
+    //
+    //         page.commands.checkValidate();
+    //     } else {
+    //         page.elements.clearImagePreview();
+    //     }
+    // }
+    //
+    // page.elements.clearImagePreview = () => {
+    //     page.elements.imageFile.val("");
+    //     page.elements.imagePreview.css("display", "none");
+    //     page.elements.wrapper.removeClass("active");
+    //     page.elements.wrapperContent.css("opacity", 1);
+    // }
 
     page.commands.showLoading = () => {
         page.elements.loader.removeClass("hide");

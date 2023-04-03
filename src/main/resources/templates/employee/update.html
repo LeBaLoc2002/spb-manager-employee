@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/iziToast/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="/assets/css/preview-image-css.css">
+    <link rel="stylesheet" href="/assets/css/expand-collapse.css">
+<!--    <link rel="stylesheet" href="/assets/css/loading.css">-->
 </head>
 <body>
 <div class="container-fluid" style="background-color: #f7f6fd; height: 100vh;">
@@ -209,6 +211,7 @@
             </div>
         </div>
     </div>
+    <th:block th:replace="/layout/footer :: footer"></th:block>
 
 </div>
 
@@ -340,7 +343,7 @@
                 required: true,
             }
         },
-        messager: {
+        messages: {
             nameEmployeeUp: {
                 required: "Vui lòng nhập tên nhân viên.",
             },
@@ -394,12 +397,8 @@
         locationRegion.address = page.elements.addressUp.val();
 
         department.id = page.elements.departmentIdEmployeeUp.val();
-        // department.name = page.elements.departmentIdEmployeeUp.find("option:selected").text();
         role.id = page.elements.roleIdEmployeeUp.val();
-        // role.code = page.elements.roleIdEmployeeUp.find("option:selected").text();
-        // employee.department = department;
-        // employee.role = role;
-        // employee.locationRegion = locationRegion;
+
 
         employee.name = page.elements.nameEmployeeUp.val();
         employee.salary = page.elements.salaryEmployeeUp.val();
@@ -412,10 +411,9 @@
         formData.append("name", employee.name);
         formData.append("salary", employee.salary);
         formData.append("experience", employee.experience);
-        formData.append("dateOfJoining", employee.experience);
+        formData.append("dateOfJoining", employee.dateOfJoining);
         formData.append("phone", employee.phone)
         formData.append("locationRegionId", locationRegion.id);
-        console.log(locationRegion.id)
         formData.append("provinceId", locationRegion.provinceId);
         formData.append("provinceName", locationRegion.provinceName);
         formData.append("districtId", locationRegion.districtId);
@@ -437,9 +435,9 @@
             data: formData,
         }).done((data) => {
             employee = data;
-            page.elements.frmCreateEmployee[0].reset();
-            page.elements.clearImagePreview();
-            AppUtils.IziToast.showSuccessAlert("Thêm mới nhân viên <b>'" + employee.name + "'</b> thành công.");
+            page.elements.frmUpdateEmployee[0].reset();
+            page.elements.clearImagePreviewUp();
+            AppUtils.IziToast.showSuccessAlert("Cập nhật nhân viên <b>'" + employee.name + "'</b> thành công.");
             page.commands.removeHandleShowModal();
         }).fail((jqXHR) => {
             let str = ``;
@@ -535,8 +533,10 @@
             url: page.urls.getAllProvinces
         })
             .done((data) => {
-                let results = data.results;
                 page.elements.provinceIdUp.append('<option disabled selected hidden>Chọn Tỉnh/Thành Phố</option>');
+
+
+                let results = data.results;
                 results.map(item => {
                     let str = `<option value="${item.province_id}">${item.province_name}</option>`;
                     page.elements.provinceIdUp.append(str);
@@ -561,6 +561,7 @@
                 page.elements.districtIdUp.empty();
 
                 page.elements.districtIdUp.append('<option disabled selected hidden>Chọn Quận/Huyện</option>');
+
 
                 let results = data.results;
 
@@ -588,6 +589,7 @@
                 page.elements.wardIdUp.empty();
 
                 page.elements.wardIdUp.append('<option disabled selected hidden>Chọn Phường/Xã</option>');
+
                 let results = data.results;
 
                 results.map(item => {
@@ -609,7 +611,7 @@
         let imageObj = new Image();
 
         imageObj.onload = function () {
-            page.elements.contextUp.width = imageObj.width;
+            page.elements.contextUp.canvas.width = imageObj.width;
             page.elements.contextUp.canvas.height = imageObj.height;
             page.elements.contextUp.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
         };
@@ -654,7 +656,6 @@
 
     page.commands.loadData = () => {
 
-
         let employeeId = [[${employeeId}]];
         page.elements.getEmployeeById(employeeId);
 
@@ -670,9 +671,6 @@
             });
         });
     }
-
-
-
 
     page.commands.handleTooltip = () => {
         $('[data-toggle="tooltip"]').tooltip();

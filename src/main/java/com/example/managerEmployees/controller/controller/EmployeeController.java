@@ -28,19 +28,13 @@ public class EmployeeController {
     public String showIndexPage() {
 //        employeeService.getInfo(model);
 
-        return "/employee/index";
+        return "employee/index";
     }
 
-//    @GetMapping("/create")
-//    public String showCreatePage(Model model) {
-////        employeeService.getInfo(model);
-//        return "/employee/Create";
-//    }
 
     @GetMapping("/create")
     public String showCreatePage() {
-//        employeeService.getInfo(model);
-        return "/employee/create";
+        return "employee/create";
     }
 
     @GetMapping("/update/{employeeId}")
@@ -54,24 +48,8 @@ public class EmployeeController {
 
         model.addAttribute("employeeId", employeeId);
 
-//        employeeService.getInfo(model);
 
-        return "/employee/update";
+        return "employee/update";
     }
 
-//    @GetMapping("/update/{employeeId}")
-//    public String showUpdatePage(@PathVariable Long employeeId, Model model) {
-//
-//        Optional<Employee> employee = employeeService.findById(employeeId);
-//
-//        if (!employee.isPresent()) {
-//            throw new DataInputException("ID nhân viên không hợp lệ");
-//        }
-//
-//        model.addAttribute("employeeId", employeeId);
-//
-////        employeeService.getInfo(model);
-//
-//        return "/employee/Update";
-//    }
 }

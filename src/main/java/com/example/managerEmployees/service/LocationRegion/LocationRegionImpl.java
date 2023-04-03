@@ -23,7 +23,7 @@ public class LocationRegionImpl implements ILocationRegionService{
 
     @Override
     public Optional<LocationRegion> findById(Long id) {
-        return Optional.empty();
+        return locationRegionRepository.findById(id);
     }
 
     @Override

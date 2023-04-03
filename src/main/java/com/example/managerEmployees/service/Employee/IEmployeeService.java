@@ -42,4 +42,8 @@ public interface IEmployeeService extends IGeneralService<Employee> {
 
     EmployeeDTO getInfo(Model model);
 
+    Boolean existsEmployeeByNameAndDeletedIsFalse(String name);
+
+    Boolean existsEmployeeByNameAndIdNotAndDeletedIsFalse(String name , Long id);
+
 }

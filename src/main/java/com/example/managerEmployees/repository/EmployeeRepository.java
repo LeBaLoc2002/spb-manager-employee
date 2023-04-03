@@ -76,4 +76,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     )
     List<EmployeeDTO> finByKeyword(@Param("keyword") String keyword) ;
 
+    Boolean existsEmployeeByNameAndDeletedIsFalse(String name);
+
+    Boolean existsEmployeeByNameAndIdNotAndDeletedIsFalse(String name , Long id);
+
 }
