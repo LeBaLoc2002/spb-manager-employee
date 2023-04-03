@@ -1,17 +1,19 @@
 package com.example.managerEmployees.service.imageEmployee;
 
 import com.example.managerEmployees.model.EmployeeAvatar;
-import com.example.managerEmployees.repository.ImageEmployeeRepository;
+import com.example.managerEmployees.repository.EmployeeAvatarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+
 @Service
-public class EmployeeAvatarImpl implements IEmployeeAvatarService {
+public class EmployeeAvatarServiceImpl implements IEmployeeAvatarService {
 
     @Autowired
-    private ImageEmployeeRepository imageEmployeeRepository;
+    private EmployeeAvatarRepository employeeAvatarRepository;
     @Override
     public List<EmployeeAvatar> findAll() {
         return null;
@@ -29,18 +31,18 @@ public class EmployeeAvatarImpl implements IEmployeeAvatarService {
 
     @Override
     public EmployeeAvatar getById(String id) {
-        return imageEmployeeRepository.getById(id);
+        return employeeAvatarRepository.getById(id);
     }
 
     @Override
     public Optional<EmployeeAvatar> findById(String id) {
-        return imageEmployeeRepository.findById(id);
+        return employeeAvatarRepository.findById(id);
     }
 
 
     @Override
     public EmployeeAvatar save(EmployeeAvatar employeeAvatar) {
-        return imageEmployeeRepository.save(employeeAvatar);
+        return employeeAvatarRepository.save(employeeAvatar);
     }
 
     @Override
@@ -50,6 +52,6 @@ public class EmployeeAvatarImpl implements IEmployeeAvatarService {
 
     @Override
     public void delete(String id) {
-        imageEmployeeRepository.deleteById(id);
+        employeeAvatarRepository.deleteById(id);
     }
 }

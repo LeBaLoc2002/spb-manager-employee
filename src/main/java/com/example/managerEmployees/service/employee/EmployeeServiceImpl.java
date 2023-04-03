@@ -6,9 +6,9 @@ import com.example.managerEmployees.model.*;
 import com.example.managerEmployees.model.dto.employee.EmployeeCreateDTO;
 import com.example.managerEmployees.model.dto.employee.*;
 import com.example.managerEmployees.model.dto.employee.EmployeeFillterDTO;
-import com.example.managerEmployees.model.Enum.FileType;
+import com.example.managerEmployees.model.enums.EnumPosition;
+import com.example.managerEmployees.model.enums.FileType;
 import com.example.managerEmployees.repository.*;
-import com.example.managerEmployees.service.imageEmployee.IEmployeeAvatarService;
 import com.example.managerEmployees.service.locationRegion.ILocationRegionService;
 import com.example.managerEmployees.upload.IUploadService;
 import org.modelmapper.ModelMapper;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -29,32 +28,36 @@ import java.util.Map;
 import java.util.Optional;
 @Service
 @Transactional
-public class EmployeeImpl implements IEmployeeService {
+public class EmployeeServiceImpl implements IEmployeeService {
     @Autowired
     private ModelMapper modelMapper;
+
     @Autowired
     private LocationRegionRepository locationRegionRepository;
+
     @Autowired
     private ILocationRegionService locationRegionService;
 
     @Autowired
-    private IEmployeeAvatarService emloyeeAvatarService;
+    private EmployeeFilterRepository employeeFilterRepository;
 
     @Autowired
-    private EmployeeFilterRepository employeeFilterRepository;
-    @Autowired
-    private RoleRepository roleRepository;
+    private PositionRepository positionRepository;
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
     @Autowired
-    private UploadUtil uploadImage;
+    private UploadUtil uploadUtil;
+
     @Autowired
     private IUploadService uploadService;
+
     @Autowired
-    private ImageEmployeeRepository imageEmloyeeRepository;
+    private EmployeeAvatarRepository employeeAvatarRepository;
+
     @Autowired
-    private EmployeeRepository emloyeeRepository;
+    private EmployeeRepository employeeRepository;
 
 
     @Override
@@ -64,12 +67,12 @@ public class EmployeeImpl implements IEmployeeService {
 
     @Override
     public Employee getById(Long id) {
-        return emloyeeRepository.getById(id);
+        return employeeRepository.getById(id);
     }
 
     @Override
     public Optional<Employee> findById(Long id) {
-        return emloyeeRepository.findById(id);
+        return employeeRepository.findById(id);
     }
 
     @Override
@@ -84,7 +87,7 @@ public class EmployeeImpl implements IEmployeeService {
 
     @Override
     public Employee save(Employee emloyee) {
-        return emloyeeRepository.save(emloyee);
+        return employeeRepository.save(emloyee);
     }
 
     @Override
@@ -93,80 +96,75 @@ public class EmployeeImpl implements IEmployeeService {
     }
 
     @Override
-    public Boolean existsEmployeeByNameAndDeletedIsFalse(String name) {
-        return emloyeeRepository.existsEmployeeByNameAndDeletedIsFalse(name);
+    public Boolean existsEmployeeByFullNameAndDeletedIsFalse(String fullName) {
+        return employeeRepository.existsEmployeeByFullNameAndDeletedIsFalse(fullName);
     }
 
     @Override
-    public Boolean existsEmployeeByNameAndIdNotAndDeletedIsFalse(String name, Long id) {
-        return emloyeeRepository.existsEmployeeByNameAndIdNotAndDeletedIsFalse(name,id);
+    public Boolean existsEmployeeByFullNameAndIdNotAndDeletedIsFalse(String fullName, Long id) {
+        return employeeRepository.existsEmployeeByFullNameAndIdNotAndDeletedIsFalse(fullName,id);
     }
 
     @Override
     public Page<Employee> findAll(Pageable pageable) {
-        return emloyeeRepository.findAll(pageable);
+        return employeeRepository.findAll(pageable);
     }
 
     @Override
     public List<EmployeeDTO> finByKeyword(String keyword) {
-        return emloyeeRepository.finByKeyword(keyword);
+        return employeeRepository.finByKeyword(keyword);
     }
 
     @Override
-    public Optional<EmployeeDTO> findEmployeeById(Long employeeId) {
-        return emloyeeRepository.findEmployeeById(employeeId);
+    public Optional<EmployeeDTO> findEmployeeDTOById(Long employeeId) {
+        return employeeRepository.findEmployeeById(employeeId);
     }
 
     @Override
     public List<EmployeeDTO> getAllEmployeeDTO() {
-        return emloyeeRepository.getAllEmployeeDTO();
+        return employeeRepository.getAllEmployeeDTO();
     }
 
     @Override
     public Employee updateWithAvatar(Employee employee, MultipartFile file) throws IOException {
 
-
-        Role role = employee.getRole();
-        roleRepository.save(role);
         Department department = employee.getDepartment();
         departmentRepository.save(department);
         LocationRegion locationRegion = employee.getLocationRegion();
         locationRegionRepository.save(locationRegion);
 
         EmployeeAvatar oldEmployeeAvatar = employee.getEmployeeAvatar();
-        uploadService.destroyImage(oldEmployeeAvatar.getCloudId(), uploadImage.buildImageDestroyParams(employee, oldEmployeeAvatar.getCloudId()));
-        EmployeeAvatar newEmployeeAvatar = uploadAndSaveEmloyeeAvatar(file,oldEmployeeAvatar);
+        uploadService.destroyImage(oldEmployeeAvatar.getCloudId(), uploadUtil.buildImageDestroyParams(employee, oldEmployeeAvatar.getCloudId()));
+        EmployeeAvatar newEmployeeAvatar = uploadAndSaveEmployeeAvatar(file,oldEmployeeAvatar);
 
         employee.setEmployeeAvatar(newEmployeeAvatar);
 
-        employee = emloyeeRepository.save(employee);
+        employee = employeeRepository.save(employee);
         return employee;
     }
 
     @Override
     public Employee updateNoAvatar(Employee employee) {
-        Role role = employee.getRole();
-        roleRepository.save(role);
         Department department = employee.getDepartment();
         departmentRepository.save(department);
         LocationRegion locationRegion = employee.getLocationRegion();
         locationRegionRepository.save(locationRegion);
         EmployeeAvatar employeeAvatar = employee.getEmployeeAvatar();
-        imageEmloyeeRepository.save(employeeAvatar);
-        employee = emloyeeRepository.save(employee);
+        employeeAvatarRepository.save(employeeAvatar);
+        employee = employeeRepository.save(employee);
         return employee;
     }
 
     @Override
     public Employee saveLocationRegion(Employee employee) {
         locationRegionService.save(employee.getLocationRegion());
-        return emloyeeRepository.save(employee);
+        return employeeRepository.save(employee);
     }
 
     @Override
-    public Employee createEmployee(EmployeeCreateDTO employeeCreateDTO, LocationRegion locationRegion, Role role , Department department) throws ParseException {
+    public Employee createEmployee(EmployeeCreateDTO employeeCreateDTO, LocationRegion locationRegion, Position position, Department department) throws ParseException {
         Employee emloyee = new Employee();
-        String name = employeeCreateDTO.getName();
+        String name = employeeCreateDTO.getFullName();
         String salary = employeeCreateDTO.getSalary();
         String experience = employeeCreateDTO.getExperience();
 
@@ -180,22 +178,20 @@ public class EmployeeImpl implements IEmployeeService {
 
         EmployeeAvatar employeeAvatar = new EmployeeAvatar();
         employeeAvatar.setFileType(fileType);
-        employeeAvatar = imageEmloyeeRepository.save(employeeAvatar);
+        employeeAvatar = employeeAvatarRepository.save(employeeAvatar);
         if (fileType.equals(FileType.IMAGE.getValue())) {
-            employeeAvatar = uploadAndSaveEmloyeeAvatar(file,employeeAvatar);
+            employeeAvatar = uploadAndSaveEmployeeAvatar(file,employeeAvatar);
         }
         department = new Department();
         department.setId(employeeCreateDTO.getDepartmentId());
 //        department.setName(employeeCreateDTO.toDepartment().getName());
 
-        role = new Role();
-        role.setId(employeeCreateDTO.getRoleId());
-//        role.setCode(employeeCreateDTO.toRole().getCode());
-
         locationRegion = locationRegionService.save(locationRegion);
 
+        EnumPosition enumPosition = EnumPosition.valueOf(employeeCreateDTO.getPositionCode());
+
         emloyee.setId(null)
-                .setName(name)
+                .setFullName(name)
                 .setSalary(BigDecimal.valueOf(Long.parseLong(salary)))
                 .setExperience(experience)
                 .setDateOfJoining(dateOfJoining)
@@ -203,16 +199,15 @@ public class EmployeeImpl implements IEmployeeService {
                 .setEmployeeAvatar(employeeAvatar)
                 .setLocationRegion(locationRegion)
                 .setDepartment(department)
-                .setRole(role);
-        emloyee = emloyeeRepository.save(emloyee);
+                .setPosition(enumPosition);
+        emloyee = employeeRepository.save(emloyee);
         return emloyee;
     }
 
 
-
-    private EmployeeAvatar uploadAndSaveEmloyeeAvatar(MultipartFile file, EmployeeAvatar emloyeeAvatar) {
+    private EmployeeAvatar uploadAndSaveEmployeeAvatar(MultipartFile file, EmployeeAvatar emloyeeAvatar) {
         try {
-            Map uploadResult = uploadService.uploadImage(file, uploadImage.buildImageUploadParams(emloyeeAvatar));
+            Map uploadResult = uploadService.uploadImage(file, uploadUtil.buildImageUploadParams(emloyeeAvatar));
             String fileUrl = (String) uploadResult.get("secure_url");
             String fileFormat = (String) uploadResult.get("format");
 
@@ -220,17 +215,16 @@ public class EmployeeImpl implements IEmployeeService {
             emloyeeAvatar.setFileUrl(fileUrl);
             emloyeeAvatar.setFileFolder(UploadUtil.EMLOYEES_IMAGE_UPLOAD_FOLDER);
             emloyeeAvatar.setCloudId(emloyeeAvatar.getFileFolder() + "/" + emloyeeAvatar.getId());
-            return imageEmloyeeRepository.save(emloyeeAvatar);
+            return employeeAvatarRepository.save(emloyeeAvatar);
         } catch (IOException e) {
             e.printStackTrace();
             throw new DataInputException("Upload hình ảnh thất bại.");
         }
     }
 
-    @Transactional
     @Override
     public void softDelete(Long employeeId) {
-        emloyeeRepository.softDelete(employeeId);
+        employeeRepository.softDelete(employeeId);
     }
 
     @Override
@@ -240,30 +234,4 @@ public class EmployeeImpl implements IEmployeeService {
         return employeeDTOS;
     }
 
-    @Override
-    public EmployeeDTO getInfo(Model model) {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-//        Optional<EmployeeDTO> employeeDTOOptional = .findById(EmployeeId);
-        String name = employeeDTO.getName();
-        BigDecimal salary = employeeDTO.getSalary();
-        String experience = employeeDTO.getExperience();
-        LocalDate dateOfJoining = LocalDate.parse(employeeDTO.getDateOfJoining());
-        String phone = employeeDTO.getPhone();
-        String roleId = String.valueOf(employeeDTO.getRole().getId());
-        String locationRegionId = String.valueOf(employeeDTO.getLocationRegion().getId());
-        String emloyeeAvatarId = employeeDTO.getEmployeeAvatar().getId();
-        String departmentId = String.valueOf(employeeDTO.getDepartment().getId());
-
-
-        model.addAttribute("name", name);
-        model.addAttribute("code", roleId);
-        model.addAttribute("salary", salary);
-        model.addAttribute("experience", experience);
-        model.addAttribute("dateOfJoining", dateOfJoining);
-        model.addAttribute("phone", phone);
-        model.addAttribute("locationRegionId", locationRegionId);
-        model.addAttribute("emloyeeAvatarId", emloyeeAvatarId);
-        model.addAttribute("Department", departmentId);
-        return employeeDTO;
-    }
 }

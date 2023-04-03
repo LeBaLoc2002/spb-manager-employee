@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<th:block th:fragment="navbar">
+    <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+        <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap">
+            <div class="bd-navbar-toggle">
+                <img class="logo" src="/assets/images/logo-128.png" alt="">
+            </div>
+            <div class="d-flex" style="margin-left: 35%;">
+                <div class="fl-l mg-10">
+                    Dashboard
+                </div>
+                <div class="fl-l mg-10">
+                    Departments
+                </div>
+                <div class="fl-l mg-10">
+                    Employees
+                </div>
+            </div>
+            <div class="offcanvas-lg offcanvas-end flex-grow-1">
+                <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                    <li class="nav-item col-6 col-lg-auto">
+                        <img class="avatar" src="/assets/images/User-Avatar-Profile-128.png" alt="">
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+    </header>
+</th:block>

@@ -2,7 +2,8 @@ package com.example.managerEmployees.controller.api;
 
 import com.example.managerEmployees.appUtils.AppUtils;
 import com.example.managerEmployees.exception.DataInputException;
-import com.example.managerEmployees.model.Enum.FileType;
+import com.example.managerEmployees.model.enums.EnumPosition;
+import com.example.managerEmployees.model.enums.FileType;
 import com.example.managerEmployees.model.dto.employee.EmployeeCreateDTO;
 import com.example.managerEmployees.model.dto.employee.EmployeeDTO;
 import com.example.managerEmployees.model.dto.employee.EmployeeFillterDTO;
@@ -10,11 +11,11 @@ import com.example.managerEmployees.model.dto.employee.EmployeeUpdateDTO;
 import com.example.managerEmployees.model.Department;
 import com.example.managerEmployees.model.Employee;
 import com.example.managerEmployees.model.LocationRegion;
-import com.example.managerEmployees.model.Role;
+import com.example.managerEmployees.model.Position;
 import com.example.managerEmployees.service.department.IDepartmentService;
 import com.example.managerEmployees.service.employee.IEmployeeService;
 import com.example.managerEmployees.service.locationRegion.ILocationRegionService;
-import com.example.managerEmployees.service.role.IRoleService;
+import com.example.managerEmployees.service.position.IPositionService;
 import io.jsonwebtoken.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -44,7 +45,7 @@ public class EmployeeAPI {
     private IEmployeeService employeeService;
 
     @Autowired
-    private IRoleService roleService;
+    private IPositionService positionService;
     @GetMapping
     public ResponseEntity<?> getAllEmployee(Pageable pageable) {
 //        Page<Employee> employeeDTOList = employeeService.findAll(pageable);
@@ -82,7 +83,7 @@ public class EmployeeAPI {
         return new ResponseEntity<>(employeeDTOS.getContent(),HttpStatus.OK);
     }
     @GetMapping("/{employeeId}")
-    public ResponseEntity<?> getbyIdEmployee(@PathVariable Long employeeId){
+    public ResponseEntity<?> getByEmployeeId(@PathVariable Long employeeId){
       Optional<Employee> emloyeeOptional = employeeService.findById(employeeId);
       if (!emloyeeOptional.isPresent()) {
           throw new DataInputException("ID không hợp lệ");
@@ -93,6 +94,7 @@ public class EmployeeAPI {
     @PostMapping
     public ResponseEntity<?> CreateEmployee (@Validated EmployeeCreateDTO employeeCreateDTO , BindingResult bindingResult) throws ParseException {
         new EmployeeCreateDTO().validate(employeeCreateDTO, bindingResult);
+
         if (bindingResult.hasFieldErrors()) {
             return appUtils.mapErrorToResponse(bindingResult);
         }
@@ -107,12 +109,12 @@ public class EmployeeAPI {
 
         LocationRegion locationRegion = employeeCreateDTO.toLocationRegion();
         locationRegion.setId(null);
-        Role role = employeeCreateDTO.toRole();
-        role.setId(null);
+        Position position = employeeCreateDTO.toRole();
+        position.setId(null);
         Department department = employeeCreateDTO.toDepartment();
         department.setId(null);
 
-        Employee newEmployee = employeeService.createEmployee(employeeCreateDTO, locationRegion,role, department);
+        Employee newEmployee = employeeService.createEmployee(employeeCreateDTO, locationRegion, position, department);
 
         return new ResponseEntity<>(newEmployee.toEmployeeDTO(), HttpStatus.CREATED);
     }
@@ -154,21 +156,22 @@ public class EmployeeAPI {
             throw new DataInputException("ID khu vực vị trí không hợp lệ.");
         }
 
-        Long roleId ;
+        String positionCode ;
         try {
-            roleId = employeeUpdateDTO.getRoleId();
-        }catch (IOException e){
-        throw new DataInputException("Role không hơp lệ");
+            positionCode = employeeUpdateDTO.getPositionCode();
+        } catch (IOException e){
+            throw new DataInputException("Role không hơp lệ");
         }
-        Optional<Role> roleOptional = roleService.findById(roleId);
-        if (!roleOptional.isPresent()) {
+
+        Optional<Position> positionOptional = positionService.findByCode(EnumPosition.valueOf(positionCode));
+        if (!positionOptional.isPresent()) {
             throw new DataInputException("Role không tồn tại.");
         }
 
         Long departmentId;
         try {
             departmentId = employeeUpdateDTO.getDepartmentId();
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new DataInputException("Phòng nhân sự không hợp lệ");
         }
 
@@ -182,11 +185,11 @@ public class EmployeeAPI {
         Department department = employeeUpdateDTO.toDepartment();
         department.setId(emloyeeOptional.get().getDepartment().getId());
         department.setName(emloyeeOptional.get().getDepartment().getName());
-        Role role = employeeUpdateDTO.toRole();
-        role.setId(emloyeeOptional.get().getRole().getId());
-        role.setCode(emloyeeOptional.get().getRole().getCode());
-        role.setName(emloyeeOptional.get().getRole().getName());
-        Employee employee = employeeUpdateDTO.toEmployee(locationRegion, department, role);
+//        EnumPosition enumPosition = positionOptional.get().getCode();
+//        Position position = employeeUpdateDTO.toPosition();
+//        position.setId(emloyeeOptional.get().getPosition().getId());
+//        position.setCode(emloyeeOptional.get().getPosition().getCode());
+        Employee employee = employeeUpdateDTO.toEmployee(locationRegion, department, positionOptional.get());
         employee.setId(employeeId);
         employee.setEmployeeAvatar(emloyeeOptional.get().getEmployeeAvatar());
 //        employee.getLocationRegion()
@@ -206,7 +209,7 @@ public class EmployeeAPI {
 //                .setName(department.getName());
 //        department = departmentService.save(department);
 //
-//        Role role = roleOptional.get();
+//        Role role = positionOptional.get();
 //        employee.getRole()
 //                .setId(role.getId())
 //                .setCode(role.getCode());

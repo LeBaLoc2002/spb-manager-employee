@@ -15,11 +15,22 @@
     margin-right: 10px;
 }
 
+nav {
+    /*background-color: #5f699f !important;*/
+    /*color: #fff;*/
+}
+
+ul.navbar-nav {
+    float: right;
+}
+
 header {
     text-align: center;
     height: 100px;
     padding-top: 25px;
-    background-color: #fff;
+    background-color: #5f699f !important;
+    color: #fff;
+    /*background-color: #fff;*/
 }
 
 .logo {
@@ -89,7 +100,18 @@ td.price {
 }
 
 .footer {
-    padding: 12px 15px 30px;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    background-color: red;
+    color: #fff;
+
+}
+
+.footer .bd-footer {
+    padding: 12px 15px 20px;
+    font-weight: 600;
+    text-align: center;
 }
 
 .avatarListImage {
@@ -137,7 +159,6 @@ label {
 }
 
 
-
 #cardId {
     width: 200px;
     height: 164px;
@@ -161,7 +182,7 @@ label {
     list-style: none;
 }
 
-.listPage li{
+.listPage li {
     background-color: rgba(255, 255, 255, 0.66);
     padding: 15px;
     display: inline-block;
@@ -169,7 +190,7 @@ label {
     cursor: pointer;
 }
 
-.listPage .active{
+.listPage .active {
     background-color: #bcabe1;
     color: #fff;
 }
@@ -178,29 +199,34 @@ label {
     max-width: 900px;
     left: 60px;
 }
-.page-title-box .page-title-right{
-    margin-top: 5px;
-    margin-left: 800px;
 
+.page-title-box .page-title {
+    padding-top: 15px;
+    float: left;
+}
+
+.page-title-box .page-title-right {
+    padding-top: 10px;
+    float: right;
 }
 
 .left-side-menu {
     padding: 0;
 }
 
-#sidebar-menu>ul>li>a {
+#sidebar-menu > ul > li > a {
     padding: 10px 17px;
 }
 
-#sidebar-menu>ul>li>a.active{
+#sidebar-menu > ul > li > a.active {
     background-color: unset;
 }
 
-#sidebar-menu>ul>li>a{
+#sidebar-menu > ul > li > a {
     color: #023a56;
 }
 
-.nav-second-level li a{
+.nav-second-level li a {
     color: #1d465a;
 }
 
@@ -208,7 +234,7 @@ label {
 .card-box {
     background-color: #fff;
     padding: 30px;
-    width:100%
+    width: 100%
 }
 
 .film-details-wrap {
@@ -218,23 +244,27 @@ label {
     display: block;
     margin: 0 auto;
 }
+
 .film-details-wrap .film-item {
     width: 100%;
     height: auto;
     /*padding: 20px;*/
     /*overflow: hidden;*/
 }
+
 .film-details-wrap .film-item-pic {
     width: 38%;
     max-width: 470px;
     float: left;
 }
+
 .film-details-wrap .film-item-pic img {
     width: 100%;
     height: 500px;
     border: 9px solid #fae2a2;
     display: block;
 }
+
 .film-details-wrap .film-item-txt {
     float: right;
     width: 60%;
@@ -243,6 +273,7 @@ label {
     background-color: #f18720;
     padding: 30px 40px;
 }
+
 .film-details-wrap .film-item-txt h3 {
     font-family: 'Futurab';
     font-weight: normal;
@@ -253,22 +284,26 @@ label {
     text-align: left;
     margin-bottom: 30px;
 }
+
 .film-overview {
     max-height: inherit;
     overflow: inherit;
     display: table;
     margin-bottom: 10px;
 }
+
 .film-details-wrap .film-item-type {
     width: 100%;
     margin-bottom: 15px;
 }
+
 .film-details-wrap .film-item-but {
     position: relative;
     display: inline-block;
     text-align: center;
     width: 100%;
 }
+
 .l-title {
     display: table-cell;
     width: 100px;
@@ -278,6 +313,7 @@ label {
     vertical-align: middle;
     color: #fff;
 }
+
 .l-value {
     display: table-cell;
     line-height: 18px;
@@ -291,6 +327,7 @@ label {
     padding: 12px 30px;
     vertical-align: middle;
 }
+
 .film-item-txt p {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;

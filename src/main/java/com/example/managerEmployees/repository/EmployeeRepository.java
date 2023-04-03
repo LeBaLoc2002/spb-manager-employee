@@ -16,68 +16,69 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("SELECT new com.example.managerEmployees.model.dto.employee.EmployeeDTO (" +
-                "el.id, " +
-                "el.name, " +
-                "el.salary, " +
-                "el.experience, " +
-                "el.dateOfJoining, " +
-                "el.phone, " +
-                "el.role, " +
-                "el.locationRegion," +
-                "el.employeeAvatar, " +
-                "el.department" +
+                "emp.id, " +
+                "emp.fullName, " +
+                "emp.salary, " +
+                "emp.experience, " +
+                "emp.dateOfJoining, " +
+                "emp.phone, " +
+                "emp.position, " +
+                "emp.locationRegion," +
+                "emp.employeeAvatar, " +
+                "emp.department" +
             ") " +
-            "FROM Employee AS el " +
-            "WHERE el.deleted = false"
+            "FROM Employee AS emp " +
+            "WHERE emp.deleted = false"
         )
     List<EmployeeDTO> getAllEmployeeDTO();
 
     @Query("SELECT new com.example.managerEmployees.model.dto.employee.EmployeeDTO (" +
-            "el.id, " +
-            "el.name, " +
-            "el.salary, " +
-            "el.experience, " +
-            "el.dateOfJoining, " +
-            "el.phone, " +
-            "el.role, " +
-            "el.locationRegion," +
-            "el.employeeAvatar, " +
-            "el.department" +
+                "emp.id, " +
+                "emp.fullName, " +
+                "emp.salary, " +
+                "emp.experience, " +
+                "emp.dateOfJoining, " +
+                "emp.phone, " +
+                "emp.position, " +
+                "emp.locationRegion," +
+                "emp.employeeAvatar, " +
+                "emp.department" +
             ") " +
-            "FROM Employee AS el " +
-            "WHERE el.id = ?1"
+            "FROM Employee AS emp " +
+            "WHERE emp.id = ?1"
     )
     Optional<EmployeeDTO> findEmployeeById(Long employeeId);
+    
     @Modifying
-    @Query("update Employee AS el SET el.deleted = true WHERE el.id = :employeeId")
+    @Query("update Employee AS emp SET emp.deleted = true WHERE emp.id = :employeeId")
     void softDelete(@Param("employeeId") Long employeeId);
 
-    @Query("SELECT e from Employee e")
+    @Query("SELECT emp from Employee AS emp")
     Page<Employee> findAll(Pageable pageable);
 
     @Query("SELECT new com.example.managerEmployees.model.dto.employee.EmployeeDTO (" +
-                "el.id, " +
-                "el.name, " +
-                "el.salary, " +
-                "el.experience, " +
-                "el.dateOfJoining, " +
-                "el.phone, " +
-                "el.role, " +
-                "el.locationRegion," +
-                "el.employeeAvatar, " +
-                "el.department" +
+                "emp.id, " +
+                "emp.fullName, " +
+                "emp.salary, " +
+                "emp.experience, " +
+                "emp.dateOfJoining, " +
+                "emp.phone, " +
+                "emp.position, " +
+                "emp.locationRegion," +
+                "emp.employeeAvatar, " +
+                "emp.department" +
             ") "+
-            "FROM Employee as el " +
-            "join Department as dp " +
-            "ON el.department = dp " +
-            "WHERE el.deleted = false " +
-            "AND (el.name LIKE :keyword " +
-            "OR el.department.name LIKE :keyword)"
+            "FROM Employee AS emp " +
+            "JOIN Department AS dp " +
+            "ON emp.department = dp " +
+            "WHERE emp.deleted = false " +
+            "AND (emp.fullName LIKE :keyword " +
+            "OR emp.department.name LIKE :keyword)"
     )
     List<EmployeeDTO> finByKeyword(@Param("keyword") String keyword) ;
 
-    Boolean existsEmployeeByNameAndDeletedIsFalse(String name);
+    Boolean existsEmployeeByFullNameAndDeletedIsFalse(String fullName);
 
-    Boolean existsEmployeeByNameAndIdNotAndDeletedIsFalse(String name , Long id);
+    Boolean existsEmployeeByFullNameAndIdNotAndDeletedIsFalse(String name , Long id);
 
 }

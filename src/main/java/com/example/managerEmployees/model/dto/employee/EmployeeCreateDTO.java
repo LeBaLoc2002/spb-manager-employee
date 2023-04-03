@@ -3,9 +3,10 @@ package com.example.managerEmployees.model.dto.employee;
 import com.example.managerEmployees.appUtils.ValidateUtils;
 import com.example.managerEmployees.model.Department;
 import com.example.managerEmployees.model.Employee;
-import com.example.managerEmployees.model.Enum.FileType;
+import com.example.managerEmployees.model.enums.EnumPosition;
+import com.example.managerEmployees.model.enums.FileType;
 import com.example.managerEmployees.model.LocationRegion;
-import com.example.managerEmployees.model.Role;
+import com.example.managerEmployees.model.Position;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -25,7 +25,7 @@ import java.time.LocalDate;
 public class EmployeeCreateDTO  implements Validator {
 
     private Long id;
-    private String name;
+    private String fullName;
     private String salary;
     private String experience;
     private String dateOfJoining;
@@ -45,7 +45,7 @@ public class EmployeeCreateDTO  implements Validator {
 
     private String address;
 
-    private Long roleId;
+    private String positionCode;
 
     private Long departmentId;
     private MultipartFile file;
@@ -63,8 +63,8 @@ public class EmployeeCreateDTO  implements Validator {
                 .setAddress(address);
     }
 
-    public Role toRole () {
-        return new Role()
+    public Position toRole () {
+        return new Position()
                 .setId(id);
     }
 
@@ -72,17 +72,17 @@ public class EmployeeCreateDTO  implements Validator {
         return new Department()
                 .setId(id);
     }
-    public Employee toEmployee(LocationRegion locationRegion , Department department, Role role) throws ParseException {
+    public Employee toEmployee(LocationRegion locationRegion , Department department, Position position) {
         return new Employee()
                 .setId(id)
-                .setName(name)
+                .setFullName(fullName)
                 .setSalary(BigDecimal.valueOf(Long.parseLong(salary)))
                 .setExperience(experience)
                 .setDateOfJoining(LocalDate.parse(dateOfJoining))
                 .setPhone(phone)
                 .setLocationRegion(locationRegion)
                 .setDepartment(department)
-                .setRole(role);
+                .setPosition(EnumPosition.valueOf(positionCode));
     }
 
     @Override
@@ -91,9 +91,10 @@ public class EmployeeCreateDTO  implements Validator {
     }
 
     @Override
-    public void validate(Object o, Errors errors) {
-    EmployeeCreateDTO employeeCreateDTO = (EmployeeCreateDTO) o;
+    public void validate(Object object, Errors errors) {
+        EmployeeCreateDTO employeeCreateDTO = (EmployeeCreateDTO) object;
         MultipartFile multipartFile = employeeCreateDTO.getFile();
+
         if (multipartFile == null || multipartFile.getSize() == 0) {
             errors.rejectValue("file", "file.null", "Vui lòng chọn tệp tin làm ảnh đại diện");
             return;

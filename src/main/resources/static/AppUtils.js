@@ -16,15 +16,11 @@ class AppUtils {
     static SCALE_IMAGE_W60_H60_Q100 = "c_limit,w_60,h_60,q_100";
     static SCALE_IMAGE_W158_H235_Q100 = "c_limit,w_158,h_235,q_100";
 
+    static API_SERVER = this.DOMAIN_SERVER + "/api";
     static PROVINCE_URL = "https://vapi.vnappmob.com/api/province/";
-
-    static GETALLROLE_URL = "http://localhost:1312/api/roles";
-
-
-    static GETALLDEPARTMENT_URL = "http://localhost:1312/api/departments";
-    static GETALLEMPLOYEE_URL = "http://localhost:1312/api/employees";
-
-    static EMPLOYEE_URL = "http://localhost:1312/api/employees";
+    static POSITION_API = this.API_SERVER + "/positions";
+    static DEPARTMENT_API = this.API_SERVER + "/departments";
+    static EMPLOYEE_API = this.API_SERVER + "/employees";
 
     static AlertMessageEn = class {
         static SUCCESS_CREATED = "Successful data generation !";
@@ -201,9 +197,8 @@ class LocationRegion {
 }
 
 class Employee {
-    constructor(id , name, salary,experience,dateOfJoining,phone, locationRegion ,department,employeeAvatar, role) {
-        this.role = role;
-        this.name = name;
+    constructor(id, fullName, salary, experience, dateOfJoining, phone, locationRegion, department, employeeAvatar, position) {
+        this.fullName = fullName;
         this.salary = salary;
         this.experience = experience;
         this.dateOfJoining = dateOfJoining;
@@ -211,17 +206,25 @@ class Employee {
         this.locationRegion = locationRegion;
         this.department = department;
         this.employeeAvatar = employeeAvatar;
-        this.role = role;
+        this.position = position;
     }
 }
 
 class Department {
-    constructor(id , name) {
+    constructor(id, name) {
         this.id = id;
         this.name = name;
     }
 }
-class Role{
+
+// class Position {
+//     constructor(id, code) {
+//         this.id = id;
+//         this.code = code;
+//     }
+// }
+
+class Role {
     constructor(id, code, name) {
         this.id = id;
         this.code = code;

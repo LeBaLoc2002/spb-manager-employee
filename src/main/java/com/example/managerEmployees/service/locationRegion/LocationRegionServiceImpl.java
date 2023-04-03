@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+
 @Service
-public class LocationRegionImpl implements ILocationRegionService{
+public class LocationRegionServiceImpl implements ILocationRegionService{
     @Autowired
     private LocationRegionRepository locationRegionRepository;
     @Override

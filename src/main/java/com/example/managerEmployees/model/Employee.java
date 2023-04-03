@@ -1,6 +1,7 @@
 package com.example.managerEmployees.model;
 
 import com.example.managerEmployees.model.dto.employee.EmployeeDTO;
+import com.example.managerEmployees.model.enums.EnumPosition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,28 +18,29 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "employees")
-public class Employee extends BaseEntity{
+public class Employee extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
-    @Column(name = "employee_name")
-    private String name ;
+    private Long id;
+
+    @Column(name = "full_name")
+    private String fullName;
 
     @Column(precision = 12, scale = 0, nullable = false)
-    private BigDecimal salary ;
+    private BigDecimal salary;
+
     private String experience;
 
     private LocalDate dateOfJoining;
 
     private String phone;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    private EnumPosition position;
 
 
     @OneToOne
-    @JoinColumn(name = "location_region_id",  referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "location_region_id", referencedColumnName = "id", nullable = false)
     private LocationRegion locationRegion;
 
     @OneToOne
@@ -46,13 +48,13 @@ public class Employee extends BaseEntity{
     private EmployeeAvatar employeeAvatar;
 
     @OneToOne
-    @JoinColumn(name = "department_id",  referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
     private Department department;
 
     public EmployeeDTO toEmployeeDTO() {
         return new EmployeeDTO()
                 .setId(id)
-                .setName(name)
+                .setFullName(fullName)
                 .setSalary(salary)
                 .setExperience(experience)
                 .setDateOfJoining(String.valueOf(dateOfJoining))
@@ -60,6 +62,6 @@ public class Employee extends BaseEntity{
                 .setEmployeeAvatar(employeeAvatar.toEmployeeAvatarDTO())
                 .setDepartment(department.toDepartmentDTO())
                 .setLocationRegion(locationRegion.toLocationRegionDTO())
-                .setRole(role.toRoleDTO());
+                .setPositionCode(position.toString());
     }
 }

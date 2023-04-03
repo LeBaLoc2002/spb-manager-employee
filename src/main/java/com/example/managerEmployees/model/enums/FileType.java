@@ -1,4 +1,4 @@
-package com.example.managerEmployees.model.Enum;
+package com.example.managerEmployees.model.enums;
 
 public enum FileType {
     IMAGE("image"),

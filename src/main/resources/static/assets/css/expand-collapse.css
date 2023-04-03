@@ -51,11 +51,16 @@
 /*}*/
 
 .accordion {
-    width: 100vw;
+    width: 100%;
     /* margin-bottom: 1em; */
     /*position: fixed;*/
     bottom: 0;
     z-index: 10;
+}
+
+.accordion.show {
+    position: fixed;
+    height: unset;
 }
 
 .footerError {

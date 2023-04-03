@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department , Long> {
     @Query("SELECT new com.example.managerEmployees.model.dto.department.DepartmentDTO (" +
-            "dpm.id, "+
-            "dpm.name" +
+                "dpm.id, "+
+                "dpm.name" +
             ")" +
             "FROM Department AS dpm"
     )

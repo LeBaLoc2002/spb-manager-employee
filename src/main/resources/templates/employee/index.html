@@ -8,156 +8,141 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/iziToast/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/assets/sweet-alert/sweetalert2.min.css">
+    <link rel="stylesheet" href="/assets/iziToast/iziToast.css">
     <link rel="stylesheet" href="/assets/css/expand-collapse.css">
 <!--    <link rel="stylesheet" href="/assets/css/loading.css">-->
 <!--    <link href="/assets/css/icons.min.css" rel="stylesheet"  type="text/css">-->
 
 </head>
 <body>
-<div class="container-fluid" style="background-color: #f7f6fd; height: 100vh;">
-    <header>
-        <div class="container">
-            <div class="col-1 fl-l">
-                <img class="logo" src="/assets/images/logo-128.png" alt="">
-            </div>
-            <div class="col-10 fl-l">
-                <div style="position: absolute; left: 40%;">
-                    <div class="fl-l mg-10">
-                        Dashboard
-                    </div>
-                    <div class="fl-l mg-10">
-                        Departments
-                    </div>
-                    <div class="fl-l mg-10">
-                        Empoyees
-                    </div>
+    <th:block th:replace="layout/header"/>
+    <div class="container-fluid" style="background-color: #f7f6fd; height: 100vh;">
+
+
+        <div class="content container">
+            <div class="filter" style="height: 125px;">
+                <div class="fl-l mgc-40-10">
+                    <select class="form-select" name="dateOfJoiningEmployee" id="dateOfJoiningEmployee">
+                        <option value="2014-07-01">2014-07-01</option>
+                    </select>
+                </div>
+                <div class="fl-l mgc-40-10">
+                    <select class="form-select" name="departmentIdEmployee" id="departmentIdEmployee">
+                        <option value="Department">Department</option>
+                    </select>
+                </div>
+                <div class="fl-l mgc-40-10">
+                    <select class="form-select" name="experienceEmployee" id="experienceEmployee">
+                        <option value="Seniority">Seniority</option>
+                    </select>
+                </div>
+                <div class="fl-l mgc-40-10">
+                    <select class="form-select" name="salaryEmployee" id="salaryEmployee">
+                        <option value="Salary">Salary</option>
+                    </select>
+                </div>
+                <div class="fl-l mgc-40-10">
+                    <input type="text" class="form-control" placeholder="Search for departments and empoyees">
+                </div>
+                <div>
+
+                    <a href="/cp/employees/create">
+                        <button class="btn btn-outline-primary fl-r mgc-40-10">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            THÊM NHÂN VIÊN
+                        </button>
+                    </a>
                 </div>
             </div>
-            <div class="col-1 fl-r">
-                <img class="avatar" src="/assets/images/User-Avatar-Profile-128.png" alt="">
-            </div>
+            <table id="tbEmployee" class="table table-hover ">
+                <thead>
+                <tr class="text-center">
+                    <th>
+                        <input type="checkbox">
+                    </th>
+                    <th></th>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Experience</th>
+                    <th>Salary ($)</th>
+                    <th>Date of joining</th>
+                    <th>Phone</th>
+                    <th colspan="2">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
         </div>
-    </header>
-
-    <div class="content container">
-        <div class="filter" style="height: 125px;">
-            <div class="fl-l mgc-40-10">
-                <select class="form-select" name="dateOfJoiningEmployee" id="dateOfJoiningEmployee">
-                    <option value="2014-07-01">2014-07-01</option>
-                </select>
-            </div>
-            <div class="fl-l mgc-40-10">
-                <select class="form-select" name="departmentIdEmployee" id="departmentIdEmployee">
-                    <option value="Department">Department</option>
-                </select>
-            </div>
-            <div class="fl-l mgc-40-10">
-                <select class="form-select" name="experienceEmployee" id="experienceEmployee">
-                    <option value="Seniority">Seniority</option>
-                </select>
-            </div>
-            <div class="fl-l mgc-40-10">
-                <select class="form-select" name="salaryEmployee" id="salaryEmployee">
-                    <option value="Salary">Salary</option>
-                </select>
-            </div>
-            <div class="fl-l mgc-40-10">
-                <input type="text" class="form-control" placeholder="Search for departments and empoyees">
-            </div>
-            <div>
-
-                <a href="/cp/employees/create">
-                    <button class="btn btn-outline-primary fl-r mgc-40-10">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
-                </a>
-            </div>
-        </div>
-        <table id="tbEmployee" class="table table-hover ">
-            <thead>
-            <tr class="text-center">
-                <th></th>
-                <th></th>
-                <th>Name</th>
-                <th>ID</th>
-                <th>Department</th>
-                <th>Role</th>
-                <th>Experience</th>
-                <th>Salery ($)</th>
-                <th>Date of joining</th>
-                <th>Phone</th>
-                <th colspan="2">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
     </div>
-    <th:block th:replace="/layout/footer :: footer"></th:block>
 
-</div>
-<script src="/assets/js/jQuery.3.6.1.js"></script>
-
-<script src="../../static/assets/iziToast/dist/js/iziToast.min.js"></script>
-<script src="/AppUtils.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
-<script>
-    const page = {
-        urls: {
-            getAllRole: AppUtils.GETALLROLE_URL,
-            getAllDepartment: AppUtils.GETALLDEPARTMENT_URL,
-            getAllProvinces: AppUtils.PROVINCE_URL,
-            getAllDistrictsByProvinceId: AppUtils.PROVINCE_URL + "district/",
-            getAllWardsByDistrictId: AppUtils.PROVINCE_URL + "ward/",
-            getAllEmployee: AppUtils.GETALLEMPLOYEE_URL,
-            getAllEmployeeById: AppUtils.GETALLEMPLOYEE_URL + "id",
-            deleteEmployeeById : AppUtils.EMPLOYEE_URL
-        },
-        elements: {},
-        loadData: {},
-        commands: {},
-        alertDanger: {},
-        initializeEventControl: {}
-    }
-
-    page.elements.frmCreateEmployee = $("#frmCreateEmployee");
-    page.elements.nameEmployee = $("#nameEmployee");
-    page.elements.salaryEmployee = $("#salaryEmployee");
-    page.elements.experienceEmployee = $("#experienceEmployee");
-    page.elements.dateOfJoiningEmployee = $("#dateOfJoiningEmployee");
-    page.elements.phoneEmployee = $("#phoneEmployee");
-    page.elements.roleIdEmployee = $("#roleIdEmployee");
-    page.elements.departmentIdEmployee = $("#departmentIdEmployee");
-    page.elements.provinceId = $("#provinceId");
-    page.elements.districtId = $("#districtId");
-    page.elements.wardId = $("#wardId");
-    page.elements.address = $("#address");
-    page.elements.btnCreate = $("#btnCreate");
+    <th:block th:replace="layout/footer :: footer"></th:block>
 
 
-    page.alertDanger.frmCreateEmployee = $("#frmCreateEmployee .frm-alert-danger");
+    <script src="/assets/js/jQuery.3.6.1.js"></script>
+    <script src="/assets/sweet-alert/sweetalert2@11.js"></script>
+    <script src="/assets/iziToast/iziToast.js"></script>
+    <script src="/AppUtils.js"></script>
 
-    page.elements.loader = $(".loader");
-    page.elements.footerAccordion = $(".footer section.accordion");
-    page.elements.footerContent = $(".footer section.accordion .content");
-    page.elements.accordionCollapse = $('input[name=collapse]');
+    <script>
+        const page = {
+            urls: {
+                getAllRole: AppUtils.POSITION_API,
+                getAllDepartment: AppUtils.DEPARTMENT_API,
+                getAllProvinces: AppUtils.PROVINCE_URL,
+                getAllDistrictsByProvinceId: AppUtils.PROVINCE_URL + "district/",
+                getAllWardsByDistrictId: AppUtils.PROVINCE_URL + "ward/",
+                getAllEmployee: AppUtils.EMPLOYEE_API,
+                getAllEmployeeById: AppUtils.EMPLOYEE_API + "id",
+                deleteEmployeeById : AppUtils.EMPLOYEE_API
+            },
+            elements: {},
+            loadData: {},
+            commands: {},
+            alertDanger: {},
+            initializeEventControl: {}
+        }
 
-    page.elements.tbEmployee = $("#tbEmployee");
-    page.elements.tbBdEmployee = $("#tbEmployee tbody");
+        page.elements.frmCreateEmployee = $("#frmCreateEmployee");
+        page.elements.nameEmployee = $("#nameEmployee");
+        page.elements.salaryEmployee = $("#salaryEmployee");
+        page.elements.experienceEmployee = $("#experienceEmployee");
+        page.elements.dateOfJoiningEmployee = $("#dateOfJoiningEmployee");
+        page.elements.phoneEmployee = $("#phoneEmployee");
+        page.elements.roleIdEmployee = $("#roleIdEmployee");
+        page.elements.departmentIdEmployee = $("#departmentIdEmployee");
+        page.elements.provinceId = $("#provinceId");
+        page.elements.districtId = $("#districtId");
+        page.elements.wardId = $("#wardId");
+        page.elements.address = $("#address");
+        page.elements.btnCreate = $("#btnCreate");
 
-    let employeeAvatar = new EmployeeAvatar();
-    let employee = new Employee();
-    let locationRegion = new LocationRegion();
-    let department = new Department();
-    let role = new Role();
+
+        page.alertDanger.frmCreateEmployee = $("#frmCreateEmployee .frm-alert-danger");
+
+        page.elements.loader = $(".loader");
+        page.elements.footerAccordion = $(".footer section.accordion");
+        page.elements.footerContent = $(".footer section.accordion .content");
+        page.elements.accordionCollapse = $('input[name=collapse]');
+
+        page.elements.tbEmployee = $("#tbEmployee");
+        page.elements.tbBdEmployee = $("#tbEmployee tbody");
+
+        let employeeAvatar = new EmployeeAvatar();
+        let employee = new Employee();
+        let locationRegion = new LocationRegion();
+        let department = new Department();
+        let position = new Role();
 
 
-    page.commands.handleShowConfirmDelete = () => {
-        $(".delete").on("click", function () {
-            let id = $(this).data("id");
-            page.commands.getAllEmployeeById(id).then(() => {
+        page.commands.handleShowConfirmDelete = () => {
+            page.elements.tbBdEmployee.on("click", ".delete", function () {
+                let id = $(this).data("id");
+                let fullName = $(this).data("full-name");
                 Swal.fire({
                     title: 'Bạn có chắc chắn muốn xóa?',
                     // text: "🖥🖥🖥",
@@ -168,351 +153,338 @@
                     confirmButtonText: 'Yes!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        page.commands.doDeleteEmployee(id)
+                        page.commands.doDeleteEmployee(id, fullName)
                     }
                 })
-            })
-        });
-    }
+            });
+        }
 
-    page.commands.doDeleteEmployee = (employeeId) => {
-        page.commands.showLoading();
-        $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "DELETE",
-            url : page.urls.deleteEmployeeById + employeeId,
-            data: JSON.stringify(employeeId)
-        })
-            .done(() => {
-                $("#tr_" + employeeId).remove();
-                AppUtils.IziToast.showSuccessAlert("Xóa nhân viên <b>'" + employee.name + "'</b> thành công");
-                page.commands.handleShowConfirmDelete();
+        page.commands.doDeleteEmployee = (employeeId, fullName) => {
+            page.commands.showLoading();
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "DELETE",
+                url : page.urls.deleteEmployeeById + '/' + employeeId
             })
-            .fail((jqXHR) => {
-                if (jqXHR.responseJSON.message) {
-                    AppUtils.SweetAlert.showErrorAlert(jqXHR.responseJSON);
-                } else {
-                    AppUtils.SweetAlert.showError500();
+                .done(() => {
+                    $("#tr_" + employeeId).remove();
+                    AppUtils.IziToast.showSuccessAlert("Xóa nhân viên <b>'" + fullName + "'</b> thành công");
+                })
+                .fail((jqXHR) => {
+                    if (jqXHR.responseJSON.message) {
+                        AppUtils.SweetAlert.showErrorAlert(jqXHR.responseJSON);
+                    } else {
+                        AppUtils.SweetAlert.showError500();
+                    }
+                })
+                .always(function () {
+                    page.commands.closeLoading();
+                })
+        }
+
+        page.commands.getAllEmployee = () => {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: page.urls.getAllEmployee
+            }).done((data) => {
+                $.each(data, (i, item) => {
+                    employee = item;
+                    page.elements.tbBdEmployee.prepend(page.commands.renderEmployee(employee));
+                })
+            }).fail((error) => {
+                AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_EMPLOYEE);
+            })
+        }
+
+        page.commands.getAllProvinces = () => {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: page.urls.getAllProvinces
+            })
+                .done((data) => {
+                    let results = data.results;
+                    page.elements.provinceId.append('<option disabled selected hidden>Chọn Tỉnh/Thành Phố</option>');
+                    results.map(item => {
+                        let str = `<option value="${item.provinceId}">${item.provinceName}</option>`;
+                        page.elements.provinceId.append(str);
+                    })
+                })
+                .fail((error) => {
+                    AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_PROVINCE);
+                })
+        }
+
+        page.commands.getAllDistrictsByProvinceId = (provinceId) => {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: page.urls.getAllDistrictsByProvinceId + provinceId
+            })
+                .done((data) => {
+                    page.elements.districtId.empty();
+
+                    page.elements.districtId.append('<option disabled selected hidden>Chọn Quận/Huyện</option>');
+
+                    let results = data.results;
+
+                    results.map(item => {
+                        let str = `<option value="${item.districtId}">${item.districtName}</option>`;
+                        page.elements.districtId.append(str);
+                    })
+                })
+                .fail((error) => {
+                    AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_DISTRICT);
+                })
+        }
+
+        page.commands.getAllWardsByDistrictId = (districtId) => {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: page.urls.getAllWardsByDistrictId + districtId
+            })
+                .done((data) => {
+                    page.elements.wardId.empty();
+
+                    page.elements.wardId.append('<option disabled selected hidden>Chọn Phường/Xã</option>');
+                    let results = data.results;
+
+                    results.map(item => {
+                        let str = `<option value="${item.wardId}">${item.wardName}</option>`;
+                        page.elements.wardId.append(str);
+                    })
+                })
+                .fail((error) => {
+                    AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_WARD);
+                })
+        }
+
+        page.commands.getAllEmployeeById = (employeeId) => {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: page.urls.getAllEmployee + employeeId
+            }).done((data) => {
+                employee = data;
+            }).fail((jqXHR) => {
+                let errors = jqXHR.response;
+                if (errors) {
+                    let str = "";
+                    $.each(data, (k, v) => {
+                        str += `
+                       ${v}
+                       `;
+                    })
+                    AppUtils.SweetAlert.showErrorAlert(str);
                 }
             })
-            .always(function () {
-                page.commands.closeLoading();
-            })
-    }
+        }
 
-    page.commands.getAllEmployee = () => {
-        return $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: page.urls.getAllEmployee
-        }).done((data) => {
-            $.each(data, (i, item) => {
-                employee = item;
-                page.elements.tbBdEmployee.prepend(page.commands.renderEmployee(employee));
-                page.commands.handleShowConfirmDelete();
-                page.commands.removeHandleShowModal();
-            })
-        }).fail((error) => {
-            AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_EMPLOYEE);
-        })
-    }
+        page.commands.renderEmployee = (employee) => {
+            let image_thumbnail = AppUtils.BASE_URL_CLOUD_IMAGE + "/"
+                + AppUtils.SCALE_IMAGE_W60_H60_Q100 + "/"
+                + employee.employeeAvatar.fileFolder + "/"
+                + employee.employeeAvatar.fileName;
 
-    page.commands.getAllProvinces = () => {
-        return $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: page.urls.getAllProvinces
-        })
-            .done((data) => {
-                let results = data.results;
-                page.elements.provinceId.append('<option disabled selected hidden>Chọn Tỉnh/Thành Phố</option>');
-                results.map(item => {
-                    let str = `<option value="${item.provinceId}">${item.provinceName}</option>`;
-                    page.elements.provinceId.append(str);
-                })
-            })
-            .fail((error) => {
-                AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_PROVINCE);
-            })
-    }
+            return `
+                <tr id="tr_${employee.id}" class="text-center">
+                    <td>
+                        <input class="deletes" type="checkbox" data-id = "${employee.id}" >
+                    </td>
+                    <td >
+                        <img class="avatar" src=${image_thumbnail} alt="${employeeAvatar.fileName}">
+                    </td>
+                    <td >
+                        <span>${employee.fullName}</span>
+                    </td>
+                    <td >
+                        ${employee.id}
+                    </td>
+                    <td >
+                       ${employee.department.name}
+                    </td>
+                    <td >
+                        ${employee.positionCode}
+                    </td>
+                    <td >
+                        ${employee.experience}
+                    </td>
+                    <td >
+                       ${employee.salary}
+                    </td>
+                    <td>
+                        ${employee.dateOfJoining}
+                    </td>
+                    <td>
+                       ${employee.phone}
+                    </td>
+                    <td>
+                        <a href="/cp/employees/update/${employee.id}">
+                            <button data-id="${employee.id}"
+                                data-avatar-id = "${employeeAvatar.id}"
+                                data-avatar-file-folder = "${employeeAvatar.fileFolder}"
+                                data-avatar-file-name = "${employeeAvatar.fileName}"
+                                class="btn btn-outline-primary update"
+                            >
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </a>
+                    </td>
+                    <td>
+                           <button data-id="${employee.id}" data-full-name="${employee.fullName}"
+                                class="btn btn-outline-danger delete">
+                               <i class="fa fa-ban" aria-hidden="true"></i>
+                            </button>
+                    </td>
+                </tr>
 
-    page.commands.getAllDistrictsByProvinceId = (provinceId) => {
-        return $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: page.urls.getAllDistrictsByProvinceId + provinceId
-        })
-            .done((data) => {
-                page.elements.districtId.empty();
-
-                page.elements.districtId.append('<option disabled selected hidden>Chọn Quận/Huyện</option>');
-
-                let results = data.results;
-
-                results.map(item => {
-                    let str = `<option value="${item.districtId}">${item.districtName}</option>`;
-                    page.elements.districtId.append(str);
-                })
-            })
-            .fail((error) => {
-                AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_DISTRICT);
-            })
-    }
-
-    page.commands.getAllWardsByDistrictId = (districtId) => {
-        return $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: page.urls.getAllWardsByDistrictId + districtId
-        })
-            .done((data) => {
-                page.elements.wardId.empty();
-
-                page.elements.wardId.append('<option disabled selected hidden>Chọn Phường/Xã</option>');
-                let results = data.results;
-
-                results.map(item => {
-                    let str = `<option value="${item.wardId}">${item.wardName}</option>`;
-                    page.elements.wardId.append(str);
-                })
-            })
-            .fail((error) => {
-                AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_WARD);
-            })
-    }
-
-    page.commands.getAllEmployeeById = (employeeId) => {
-        return $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: page.urls.getAllEmployee + employeeId
-        }).done((data) => {
-            employee = data;
-        }).fail((jqXHR) => {
-            let errors = jqXHR.response;
-            if (errors) {
-                let str = "";
-                $.each(data, (k, v) => {
-                    str += `
-                   ${v}
-                   `;
-                })
-                AppUtils.SweetAlert.showErrorAlert(str);
-            }
-        })
-    }
-
-    page.commands.renderEmployee = (employee) => {
-        let image_thumbnail = AppUtils.BASE_URL_CLOUD_IMAGE + "/"
-            + AppUtils.SCALE_IMAGE_W60_H60_Q100 + "/"
-            + employee.employeeAvatar.fileFolder + "/"
-            + employee.employeeAvatar.fileName;
-
-        return `
-            <tr id="tr_${employee.id}" class="text-center">
-                <td>
-                    <input class="deletes" type="checkbox" data-id = "${employee.id}" >
-                </td>
-                <td >
-                    <img class="avatar" src=${image_thumbnail} alt="${employeeAvatar.fileName}">
-                </td>
-                <td >
-                    <span>${employee.name}</span>
-                </td>
-                <td >
-                    ${employee.id}
-                </td>
-                <td >
-                   ${employee.department.name}
-                </td>
-                <td >
-                    ${employee.role.code}
-                </td>
-                <td >
-                    ${employee.experience}
-                </td>
-                <td >
-                   ${employee.salary}
-                </td>
-                <td>
-                    ${employee.dateOfJoining}
-                </td>
-                <td>
-                   ${employee.phone}
-                </td>
-                <td>
-                    <a href="/cp/employees/update/${employee.id}">
-                        <button data-id="${employee.id}"
-                            data-avatar-id = "${employeeAvatar.id}"
-                            data-avatar-file-folder = "${employeeAvatar.fileFolder}"
-                            data-avatar-file-name = "${employeeAvatar.fileName}"
-                            class="btn btn-outline-primary update"
-                        >
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </button>
-                    </a>
-                </td>
-                <td>
-                       <button data-id="${employee.id}"
-                        class="btn btn-outline-danger delete">
-                           <i class="fa fa-ban" aria-hidden="true"></i>
-                        </button>
-                </td>
             </tr>
+        `;
+        }
 
-        </tr>
-    `;
-    }
-
-    page.commands.getAllRole = () => {
-        return $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: page.urls.getAllRole
-        }).done((data) => {
-            let results = data;
-            page.elements.roleIdEmployee.append('<option disabled selected hidden>Chọn role</option>');
-            results.map(item => {
-                let str = `<option value="${item.id}">${item.code}</option>`;
-                page.elements.roleIdEmployee.append(str)
+        page.commands.getAllPositions = () => {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: page.urls.getAllPositions
+            }).done((data) => {
+                let results = data;
+                page.elements.roleIdEmployee.append('<option disabled selected hidden>Chọn position</option>');
+                results.map(item => {
+                    let str = `<option value="${item.code}">${item.name}</option>`;
+                    page.elements.roleIdEmployee.append(str)
+                })
+            }).fail((error) => {
+                AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_ROLE);
             })
-        }).fail((error) => {
-            AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_ROLE);
-        })
-    }
+        }
 
-    page.commands.getAllDepartment = () => {
-        return $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: page.urls.getAllDepartment,
-        }).done((data) => {
-            let results = data;
-            page.elements.departmentIdEmployee.append('<option disabled selected hidden>Chọn phòng ban</option>');
-            results.map(item => {
-                let str = `<option value="${item.id}">${item.name}</option>`;
-                page.elements.departmentIdEmployee.append(str)
+        page.commands.getAllDepartment = () => {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: page.urls.getAllDepartment,
+            }).done((data) => {
+                let results = data;
+                page.elements.departmentIdEmployee.append('<option disabled selected hidden>Chọn phòng ban</option>');
+                results.map(item => {
+                    let str = `<option value="${item.id}">${item.name}</option>`;
+                    page.elements.departmentIdEmployee.append(str)
+                })
+            }).fail((error) => {
+                AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_DEPARTMENT);
             })
-        }).fail((error) => {
-            AppUtils.IziToast.showErrorAlert(AppUtils.AlertMessageVi.ERROR_LOADING_DEPARTMENT);
-        })
-    }
+        }
 
-    // page.commands.loadImageToCanvas = (imageFile) => {
-    //     page.elements.imagePreview.css("display", "");
-    //     page.elements.wrapper.addClass("active");
-    //     page.elements.wrapperContent.css("opacity", 0);
-    //
-    //     let imageObj = new Image();
-    //
-    //     imageObj.onload = function () {
-    //         page.elements.context.canvas.width = imageObj.width;
-    //         page.elements.context.canvas.height = imageObj.height;
-    //         page.elements.context.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
-    //     };
-    //
-    //     imageObj.src = URL.createObjectURL(imageFile);
-    // }
-    //
-    // page.commands.changeImagePreview = () => {
-    //     let imageFile = page.elements.imageFile[0].files[0];
-    //
-    //     if (imageFile) {
-    //         let reader = new FileReader();
-    //
-    //         reader.readAsDataURL(imageFile);
-    //
-    //         reader.onload = function (e) {
-    //             if (e.target.readyState === FileReader.DONE) {
-    //                 page.commands.loadImageToCanvas(imageFile);
-    //             }
-    //         }
-    //
-    //         $("#imageFile-error").remove();
-    //
-    //         page.commands.checkValidate();
-    //     } else {
-    //         page.elements.clearImagePreview();
-    //     }
-    // }
-    //
-    // page.elements.clearImagePreview = () => {
-    //     page.elements.imageFile.val("");
-    //     page.elements.imagePreview.css("display", "none");
-    //     page.elements.wrapper.removeClass("active");
-    //     page.elements.wrapperContent.css("opacity", 1);
-    // }
+        // page.commands.loadImageToCanvas = (imageFile) => {
+        //     page.elements.imagePreview.css("display", "");
+        //     page.elements.wrapper.addClass("active");
+        //     page.elements.wrapperContent.css("opacity", 0);
+        //
+        //     let imageObj = new Image();
+        //
+        //     imageObj.onload = function () {
+        //         page.elements.context.canvas.width = imageObj.width;
+        //         page.elements.context.canvas.height = imageObj.height;
+        //         page.elements.context.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
+        //     };
+        //
+        //     imageObj.src = URL.createObjectURL(imageFile);
+        // }
+        //
+        // page.commands.changeImagePreview = () => {
+        //     let imageFile = page.elements.imageFile[0].files[0];
+        //
+        //     if (imageFile) {
+        //         let reader = new FileReader();
+        //
+        //         reader.readAsDataURL(imageFile);
+        //
+        //         reader.onload = function (e) {
+        //             if (e.target.readyState === FileReader.DONE) {
+        //                 page.commands.loadImageToCanvas(imageFile);
+        //             }
+        //         }
+        //
+        //         $("#imageFile-error").remove();
+        //
+        //         page.commands.checkValidate();
+        //     } else {
+        //         page.elements.clearImagePreview();
+        //     }
+        // }
+        //
+        // page.elements.clearImagePreview = () => {
+        //     page.elements.imageFile.val("");
+        //     page.elements.imagePreview.css("display", "none");
+        //     page.elements.wrapper.removeClass("active");
+        //     page.elements.wrapperContent.css("opacity", 1);
+        // }
 
-    page.commands.showLoading = () => {
-        page.elements.loader.removeClass("hide");
-        page.elements.btnCreate.prop('disabled', true);
-    }
+        page.commands.showLoading = () => {
+            page.elements.loader.removeClass("hide");
+            page.elements.btnCreate.prop('disabled', true);
+        }
 
-    page.commands.closeLoading = () => {
-        page.elements.loader.addClass("hide");
-        page.elements.btnCreate.prop('disabled', false);
-    }
+        page.commands.closeLoading = () => {
+            page.elements.loader.addClass("hide");
+            page.elements.btnCreate.prop('disabled', false);
+        }
 
-    page.commands.loadData = () => {
+        page.commands.loadData = () => {
 
-        // let employeeId = [[${employeeId}]];
-        // page.loadData.getAllEmployeeById(employeeId);
+            // let employeeId = [[${employeeId}]];
+            // page.loadData.getAllEmployeeById(employeeId);
 
-        page.commands.getAllEmployee();
-        page.commands.getAllRole();
-        page.commands.getAllDepartment();
-        page.commands.getAllProvinces();
-        page.commands.getAllProvinces().then(() => {
-            let provinceId = page.elements.provinceId.val();
-            page.commands.getAllDistrictsByProvinceId(provinceId).then(() => {
-                let districtId = page.elements.provinceId.val();
-                page.commands.getAllWardsByDistrictId(districtId);
-            });
+            page.commands.getAllEmployee();
+            // page.commands.getAllPositions();
+            // page.commands.getAllDepartments();
+            // page.commands.getAllProvinces().then(() => {
+            //     let provinceId = page.elements.provinceId.val();
+            //     page.commands.getAllDistrictsByProvinceId(provinceId).then(() => {
+            //         let districtId = page.elements.provinceId.val();
+            //         page.commands.getAllWardsByDistrictId(districtId);
+            //     });
+            // });
+        }
+
+
+        page.initializeEventControl = () => {
+            page.commands.handleShowConfirmDelete();
+        }
+
+        $(() => {
+            page.commands.loadData();
+            page.initializeEventControl();
         });
-    }
 
-    page.commands.handleShowGroupModal = () => {
-        page.commands.handleShowConfirmDelete();
-    }
-
-    page.commands.removeHandleShowModal = () => {
-        $(".delete").off("click");
-    }
-
-    page.initializeEventControl = () => {
-        page.commands.handleShowConfirmDelete();
-    }
-
-    $(() => {
-        page.commands.loadData();
-        page.initializeEventControl();
-    });
-
-</script>
+    </script>
 
 </body>
 </html>

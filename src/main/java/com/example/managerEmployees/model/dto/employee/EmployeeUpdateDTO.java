@@ -4,7 +4,8 @@ import com.example.managerEmployees.appUtils.ValidateUtils;
 import com.example.managerEmployees.model.Department;
 import com.example.managerEmployees.model.Employee;
 import com.example.managerEmployees.model.LocationRegion;
-import com.example.managerEmployees.model.Role;
+import com.example.managerEmployees.model.Position;
+import com.example.managerEmployees.model.enums.EnumPosition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ import java.time.LocalDate;
 public class EmployeeUpdateDTO implements Validator {
 
     private Long id;
-    private String name;
+    private String fullName;
     private String salary;
     private String experience;
     private String dateOfJoining;
@@ -47,7 +48,7 @@ public class EmployeeUpdateDTO implements Validator {
 
     private String address;
 
-    private Long roleId;
+    private String positionCode;
 
     private Long departmentId;
 
@@ -67,9 +68,9 @@ public class EmployeeUpdateDTO implements Validator {
                 .setAddress(address);
     }
 
-    public Role toRole() {
-        return new Role()
-                .setId(roleId);
+    public Position toPosition() {
+        return new Position()
+                .setCode(EnumPosition.valueOf(positionCode));
 
     }
 
@@ -78,17 +79,17 @@ public class EmployeeUpdateDTO implements Validator {
                 .setId(departmentId);
     }
 
-    public Employee toEmployee(LocationRegion locationRegion, Department department, Role role) {
+    public Employee toEmployee(LocationRegion locationRegion, Department department, Position position) {
         return new Employee()
                 .setId(id)
-                .setName(name)
+                .setFullName(fullName)
                 .setSalary(BigDecimal.valueOf(Long.parseLong(salary)))
                 .setExperience(experience)
                 .setDateOfJoining(LocalDate.parse(dateOfJoining))
                 .setPhone(phone)
                 .setLocationRegion(locationRegion)
                 .setDepartment(department)
-                .setRole(role);
+                .setPosition(position.getCode());
     }
 
     @Override
